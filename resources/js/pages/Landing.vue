@@ -1,0 +1,619 @@
+<script setup lang="ts">
+import { Head, Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { landingPath, messages } from '@/i18n';
+import type { Locale } from '@/i18n';
+
+const props = defineProps<{
+    locale: Locale;
+    urls: Record<Locale, string>;
+}>();
+
+const t = computed(() => messages[props.locale]);
+const otherLocale = computed<Locale>(() =>
+    props.locale === 'fr' ? 'en' : 'fr',
+);
+// Signed-in visitors would be bounced off /register, so send them to the app.
+const signedIn = computed(() => Boolean(usePage().props.auth?.user));
+const startHref = computed(() => (signedIn.value ? '/dashboard' : '/register'));
+
+const featureIcons = [
+    'M9 8a3 3 0 1 0 0 .01M17 9a2.5 2.5 0 1 0 0 .01M3 19c0-3 3-5 6-5s6 2 6 5M15 19c0-2 2-4 5-4',
+    'M4 11l8-7 8 7v9H4zM10 20v-6h4v6',
+    'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM8 12l3 3 5-6',
+    'M7 3h7l5 5v13H7zM14 3v5h5M12 11v6M9.5 14.5L12 17l2.5-2.5',
+];
+
+defineOptions({ inheritAttrs: false });
+</script>
+
+<template>
+    <Head :title="t.meta.title">
+        <meta
+            head-key="description"
+            name="description"
+            :content="t.meta.description"
+        />
+        <meta head-key="og:title" property="og:title" :content="t.meta.title" />
+        <meta
+            head-key="og:description"
+            property="og:description"
+            :content="t.meta.description"
+        />
+        <meta head-key="og:type" property="og:type" content="website" />
+        <meta
+            head-key="og:locale"
+            property="og:locale"
+            :content="locale === 'fr' ? 'fr_CA' : 'en_CA'"
+        />
+        <link head-key="canonical" rel="canonical" :href="urls[locale]" />
+        <link head-key="alt-fr" rel="alternate" hreflang="fr" :href="urls.fr" />
+        <link head-key="alt-en" rel="alternate" hreflang="en" :href="urls.en" />
+        <link
+            head-key="alt-default"
+            rel="alternate"
+            hreflang="x-default"
+            :href="urls.fr"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+    </Head>
+
+    <div
+        :lang="locale"
+        class="min-h-screen scroll-smooth bg-[#FBF5EE] font-['Manrope',system-ui,sans-serif] text-[#2B1D14]"
+    >
+        <!-- Header -->
+        <header class="px-10 py-6">
+            <div
+                class="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-4"
+            >
+                <Link
+                    :href="landingPath(locale)"
+                    class="text-[22px] font-extrabold tracking-tight"
+                >
+                    Abrio
+                </Link>
+                <nav
+                    class="flex flex-wrap items-center gap-x-6 gap-y-1 text-[15px] font-semibold"
+                    aria-label="Principal"
+                >
+                    <a href="#how" class="flex h-11 items-center">{{
+                        t.nav.how
+                    }}</a>
+                    <a href="#pricing" class="flex h-11 items-center">{{
+                        t.nav.pricing
+                    }}</a>
+                    <a href="#faq" class="flex h-11 items-center">{{
+                        t.nav.faq
+                    }}</a>
+                    <a href="#contact" class="flex h-11 items-center">{{
+                        t.nav.contact
+                    }}</a>
+                    <Link
+                        :href="landingPath(otherLocale)"
+                        :hreflang="otherLocale"
+                        :aria-label="t.nav.switchLabel"
+                        class="flex h-11 items-center rounded-full border border-[#B59A80] px-3.5"
+                    >
+                        {{ t.nav.switchText }}
+                    </Link>
+                    <Link
+                        :href="startHref"
+                        class="flex h-11 items-center rounded-xl bg-[#2B1D14] px-5.5 text-white hover:bg-[#43302A]"
+                    >
+                        {{ signedIn ? t.nav.app : t.nav.start }}
+                    </Link>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero -->
+            <section class="px-10 pt-14 pb-24">
+                <div
+                    class="mx-auto flex max-w-[1120px] flex-wrap items-center gap-14"
+                >
+                    <div class="flex flex-[1_1_460px] flex-col gap-6">
+                        <h1
+                            class="text-5xl leading-[1.04] font-extrabold tracking-[-0.035em] lg:text-6xl"
+                        >
+                            {{ t.hero.title }}
+                        </h1>
+                        <p class="text-xl leading-normal text-[#6B5647]">
+                            {{ t.hero.text }}
+                        </p>
+                        <div class="flex flex-wrap items-center gap-4">
+                            <Link
+                                :href="startHref"
+                                class="flex h-14 items-center justify-center rounded-[14px] bg-[#2B1D14] px-8 text-[17px] font-extrabold text-white hover:bg-[#43302A]"
+                            >
+                                {{ t.hero.cta }}
+                            </Link>
+                            <a
+                                href="#how"
+                                class="flex h-14 items-center px-2 text-base font-bold text-[#B4540F] hover:text-[#8F3F08]"
+                            >
+                                {{ t.hero.secondary }}
+                            </a>
+                        </div>
+                        <span class="text-sm text-[#6B5647]">{{
+                            t.hero.note
+                        }}</span>
+                    </div>
+
+                    <div
+                        class="flex flex-[1_1_380px] flex-col gap-3.5"
+                        aria-hidden="true"
+                    >
+                        <div
+                            class="flex flex-col gap-3 rounded-2xl border-2 border-[#1F8A5B] bg-white p-5"
+                        >
+                            <div
+                                class="flex flex-wrap items-center justify-between gap-2"
+                            >
+                                <span class="text-lg font-extrabold">{{
+                                    t.hero.examples.good.name
+                                }}</span>
+                                <span
+                                    class="rounded-full bg-[#DFF3E8] px-3 py-1 text-[13px] font-extrabold text-[#0B5D3B]"
+                                >
+                                    {{ t.hero.goBadge }}
+                                </span>
+                            </div>
+                            <div
+                                class="relative h-2.5 rounded-full bg-[#F0E4D6]"
+                            >
+                                <div
+                                    class="h-2.5 w-[33%] rounded-full bg-[#1F8A5B]"
+                                />
+                                <div
+                                    class="absolute -top-1 left-[75%] h-[18px] w-[3px] bg-[#2B1D14]"
+                                />
+                            </div>
+                            <div
+                                class="flex justify-between text-sm text-[#6B5647]"
+                            >
+                                <span>{{
+                                    t.hero.shareOfIncome.replace(
+                                        '{percent}',
+                                        t.hero.examples.good.percent,
+                                    )
+                                }}</span>
+                                <span>{{ t.hero.limit }}</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col gap-3 rounded-2xl border border-[#E8DACB] bg-white p-5"
+                        >
+                            <div
+                                class="flex flex-wrap items-center justify-between gap-2"
+                            >
+                                <span class="text-lg font-extrabold">{{
+                                    t.hero.examples.bad.name
+                                }}</span>
+                                <span
+                                    class="rounded-full bg-[#FBE0DE] px-3 py-1 text-[13px] font-extrabold text-[#8F1B13]"
+                                >
+                                    {{ t.hero.noBadge }}
+                                </span>
+                            </div>
+                            <div
+                                class="relative h-2.5 rounded-full bg-[#F0E4D6]"
+                            >
+                                <div
+                                    class="h-2.5 w-[77%] rounded-full bg-[#B3261E]"
+                                />
+                                <div
+                                    class="absolute -top-1 left-[75%] h-[18px] w-[3px] bg-[#2B1D14]"
+                                />
+                            </div>
+                            <div
+                                class="flex justify-between text-sm text-[#6B5647]"
+                            >
+                                <span>{{
+                                    t.hero.shareOfIncome.replace(
+                                        '{percent}',
+                                        t.hero.examples.bad.percent,
+                                    )
+                                }}</span>
+                                <span>{{ t.hero.limit }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section id="features" class="bg-white px-10 py-22">
+                <div class="mx-auto flex max-w-[1120px] flex-col gap-12">
+                    <div class="flex max-w-[720px] flex-col gap-3">
+                        <h2
+                            class="text-[40px] leading-[1.1] font-extrabold tracking-[-0.03em]"
+                        >
+                            {{ t.features.title }}
+                        </h2>
+                        <p class="text-lg leading-normal text-[#6B5647]">
+                            {{ t.features.text }}
+                        </p>
+                    </div>
+                    <div
+                        class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-5"
+                    >
+                        <article
+                            v-for="(item, i) in t.features.items"
+                            :key="item.title"
+                            class="flex flex-col gap-3.5 rounded-2xl bg-[#FBF5EE] p-7"
+                        >
+                            <span
+                                class="flex size-11 items-center justify-center rounded-full bg-[#FDEBD9]"
+                            >
+                                <svg
+                                    width="22"
+                                    height="22"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#B4540F"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path :d="featureIcons[i]" />
+                                </svg>
+                            </span>
+                            <h3 class="text-xl font-extrabold">
+                                {{ item.title }}
+                            </h3>
+                            <p class="text-base leading-normal text-[#6B5647]">
+                                {{ item.text }}
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How it works -->
+            <section id="how" class="px-10 py-22">
+                <div class="mx-auto flex max-w-[1120px] flex-col gap-12">
+                    <h2
+                        class="text-[40px] leading-[1.1] font-extrabold tracking-[-0.03em]"
+                    >
+                        {{ t.how.title }}
+                    </h2>
+                    <ol
+                        class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5"
+                    >
+                        <li
+                            v-for="(step, i) in t.how.steps"
+                            :key="step.title"
+                            class="flex flex-col gap-3 rounded-2xl border border-[#E8DACB] bg-white p-7"
+                        >
+                            <span
+                                class="flex size-10 items-center justify-center rounded-full bg-[#F5A25D] text-[17px] font-extrabold"
+                            >
+                                {{ i + 1 }}
+                            </span>
+                            <h3 class="text-xl font-extrabold">
+                                {{ step.title }}
+                            </h3>
+                            <p class="text-base leading-normal text-[#6B5647]">
+                                {{ step.text }}
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Guide -->
+            <section id="guide" class="bg-white px-10 py-22">
+                <div class="mx-auto flex max-w-[1120px] flex-wrap gap-14">
+                    <div class="flex flex-[1_1_320px] flex-col gap-4">
+                        <h2
+                            class="text-[40px] leading-[1.1] font-extrabold tracking-[-0.03em]"
+                        >
+                            {{ t.guide.title }}
+                        </h2>
+                        <p class="text-lg leading-normal text-[#6B5647]">
+                            {{ t.guide.text }}
+                        </p>
+                    </div>
+                    <div class="flex flex-[2_1_480px] flex-col gap-8">
+                        <article
+                            v-for="item in t.guide.items"
+                            :key="item.title"
+                            class="flex flex-col gap-2"
+                        >
+                            <h3 class="text-[22px] font-extrabold">
+                                {{ item.title }}
+                            </h3>
+                            <p class="text-[17px] leading-[1.6] text-[#6B5647]">
+                                {{ item.text }}
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pricing -->
+            <section id="pricing" class="px-10 py-22">
+                <div class="mx-auto flex max-w-[1120px] flex-col gap-12">
+                    <div class="flex max-w-[720px] flex-col gap-3">
+                        <h2
+                            class="text-[40px] leading-[1.1] font-extrabold tracking-[-0.03em]"
+                        >
+                            {{ t.pricing.title }}
+                        </h2>
+                        <p class="text-lg leading-normal text-[#6B5647]">
+                            {{ t.pricing.text }}
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-6">
+                        <div
+                            class="flex flex-[1_1_320px] flex-col gap-6 rounded-[20px] border border-[#E8DACB] bg-white p-9"
+                        >
+                            <div class="flex flex-col gap-2">
+                                <span class="text-lg font-extrabold">{{
+                                    t.pricing.free.name
+                                }}</span>
+                                <span
+                                    class="text-5xl font-extrabold tracking-[-0.03em]"
+                                    >{{ t.pricing.free.price }}</span
+                                >
+                            </div>
+                            <ul class="flex flex-col gap-3 text-base">
+                                <li
+                                    v-for="perk in t.pricing.free.perks"
+                                    :key="perk"
+                                    class="flex items-center gap-3"
+                                >
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="#B4540F"
+                                        stroke-width="2.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M5 12l5 5 9-10" />
+                                    </svg>
+                                    {{ perk }}
+                                </li>
+                            </ul>
+                            <Link
+                                :href="startHref"
+                                class="flex h-[52px] items-center justify-center rounded-[14px] border-2 border-[#2B1D14] text-base font-extrabold"
+                            >
+                                {{ t.pricing.free.cta }}
+                            </Link>
+                        </div>
+
+                        <div
+                            class="flex flex-[1_1_320px] flex-col gap-6 rounded-[20px] bg-[#2B1D14] p-9 text-white"
+                        >
+                            <div class="flex flex-col gap-2">
+                                <span class="text-lg font-extrabold">{{
+                                    t.pricing.unlimited.name
+                                }}</span>
+                                <div class="flex items-baseline gap-2.5">
+                                    <span
+                                        class="text-5xl font-extrabold tracking-[-0.03em]"
+                                        >{{ t.pricing.unlimited.price }}</span
+                                    >
+                                    <span class="text-[15px] text-[#E0CDB9]">{{
+                                        t.pricing.unlimited.priceNote
+                                    }}</span>
+                                </div>
+                            </div>
+                            <ul class="flex flex-col gap-3 text-base">
+                                <li
+                                    v-for="perk in t.pricing.unlimited.perks"
+                                    :key="perk"
+                                    class="flex items-center gap-3"
+                                >
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="#F5A25D"
+                                        stroke-width="2.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M5 12l5 5 9-10" />
+                                    </svg>
+                                    {{ perk }}
+                                </li>
+                            </ul>
+                            <Link
+                                :href="startHref"
+                                class="flex h-[52px] items-center justify-center rounded-[14px] bg-[#F5A25D] text-base font-extrabold text-[#2B1D14] hover:bg-[#F29443]"
+                            >
+                                {{ t.pricing.unlimited.cta }}
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Founder -->
+            <section id="founder" class="bg-white px-10 py-22">
+                <div
+                    class="mx-auto flex max-w-[1120px] flex-wrap items-center gap-12"
+                >
+                    <div
+                        class="flex size-40 flex-none items-center justify-center rounded-full bg-[#F5A25D] text-6xl font-extrabold"
+                        aria-hidden="true"
+                    >
+                        {{ t.founder.initial }}
+                    </div>
+                    <div class="flex flex-[1_1_420px] flex-col gap-3.5">
+                        <span
+                            class="text-sm font-extrabold tracking-[0.04em] text-[#B4540F] uppercase"
+                        >
+                            {{ t.founder.label }}
+                        </span>
+                        <h2
+                            class="text-4xl leading-[1.1] font-extrabold tracking-[-0.03em]"
+                        >
+                            {{ t.founder.name }}
+                        </h2>
+                        <p
+                            v-for="p in t.founder.paragraphs"
+                            :key="p"
+                            class="text-lg leading-[1.6] text-[#6B5647]"
+                        >
+                            {{ p }}
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section id="faq" class="px-10 py-22">
+                <div class="mx-auto flex max-w-[800px] flex-col gap-8">
+                    <h2
+                        class="text-[40px] leading-[1.1] font-extrabold tracking-[-0.03em]"
+                    >
+                        {{ t.faq.title }}
+                    </h2>
+                    <div class="flex flex-col border-b border-[#E8DACB]">
+                        <details
+                            v-for="item in t.faq.items"
+                            :key="item.q"
+                            class="group border-t border-[#E8DACB] py-5"
+                        >
+                            <summary
+                                class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden"
+                            >
+                                {{ item.q }}
+                                <span
+                                    class="text-2xl text-[#B4540F] group-open:hidden"
+                                    aria-hidden="true"
+                                    >+</span
+                                >
+                                <span
+                                    class="hidden text-2xl text-[#B4540F] group-open:inline"
+                                    aria-hidden="true"
+                                    >−</span
+                                >
+                            </summary>
+                            <p
+                                class="mt-3 text-base leading-[1.6] text-[#6B5647]"
+                            >
+                                {{ item.a }}
+                            </p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section id="contact" class="bg-white px-10 py-22">
+                <div class="mx-auto flex max-w-[1120px] flex-wrap gap-14">
+                    <div class="flex flex-[1_1_320px] flex-col gap-4">
+                        <h2
+                            class="text-[40px] leading-[1.1] font-extrabold tracking-[-0.03em]"
+                        >
+                            {{ t.contact.title }}
+                        </h2>
+                        <p class="text-lg leading-normal text-[#6B5647]">
+                            {{ t.contact.text }}
+                        </p>
+                    </div>
+                    <form
+                        class="flex flex-[1_1_420px] flex-col gap-4"
+                        @submit.prevent
+                    >
+                        <div class="flex flex-col gap-1.5">
+                            <label
+                                for="c-name"
+                                class="text-sm font-semibold text-[#6B5647]"
+                                >{{ t.contact.name }}</label
+                            >
+                            <input
+                                id="c-name"
+                                type="text"
+                                name="name"
+                                autocomplete="name"
+                                class="h-12 rounded-[10px] border border-[#B59A80] bg-white px-4 text-base"
+                            />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label
+                                for="c-email"
+                                class="text-sm font-semibold text-[#6B5647]"
+                                >{{ t.contact.email }}</label
+                            >
+                            <input
+                                id="c-email"
+                                type="email"
+                                name="email"
+                                autocomplete="email"
+                                class="h-12 rounded-[10px] border border-[#B59A80] bg-white px-4 text-base"
+                            />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label
+                                for="c-message"
+                                class="text-sm font-semibold text-[#6B5647]"
+                                >{{ t.contact.message }}</label
+                            >
+                            <textarea
+                                id="c-message"
+                                name="message"
+                                rows="5"
+                                class="resize-y rounded-[10px] border border-[#B59A80] bg-white px-4 py-3 text-base"
+                            />
+                        </div>
+                        <div>
+                            <button
+                                type="submit"
+                                class="h-[52px] cursor-pointer rounded-[14px] bg-[#2B1D14] px-8 text-base font-extrabold text-white hover:bg-[#43302A]"
+                            >
+                                {{ t.contact.send }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-[#2B1D14] px-10 py-12 text-[#E0CDB9]">
+            <div
+                class="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-4 text-sm"
+            >
+                <div class="flex flex-wrap items-center gap-4">
+                    <span class="text-xl font-extrabold text-white">Abrio</span>
+                    <span>© 2026</span>
+                </div>
+                <nav class="flex flex-wrap items-center gap-x-5 gap-y-1">
+                    <a href="#pricing" class="flex h-11 items-center">{{
+                        t.nav.pricing
+                    }}</a>
+                    <a href="#faq" class="flex h-11 items-center">{{
+                        t.nav.faq
+                    }}</a>
+                    <a href="#contact" class="flex h-11 items-center">{{
+                        t.nav.contact
+                    }}</a>
+                    <Link
+                        :href="landingPath(otherLocale)"
+                        :hreflang="otherLocale"
+                        class="flex h-11 items-center"
+                    >
+                        {{ t.footer.switchText }}
+                    </Link>
+                </nav>
+            </div>
+        </footer>
+    </div>
+</template>
