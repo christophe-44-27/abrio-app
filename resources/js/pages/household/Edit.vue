@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { VisitOptions } from '@inertiajs/core';
 import { Head, useForm } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { Plus } from '@lucide/vue';
 import BrandLink from '@/components/BrandLink.vue';
 import InputError from '@/components/InputError.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
+import ConflictNotice from '@/components/ConflictNotice.vue';
 import SaveBar from '@/components/SaveBar.vue';
 import StepNav from '@/components/StepNav.vue';
 import { useManualSave } from '@/composables/useManualSave';
@@ -26,7 +27,11 @@ import {
 import type { Household } from '@/lib/household';
 import { newId } from '@/lib/id';
 
-const props = defineProps<{ household: Household }>();
+const props = defineProps<{
+    household: Household;
+    /** Bumped by every save, so a stale page cannot overwrite a teammate. */
+    revision: number;
+}>();
 
 const { t, locale } = useI18n();
 
@@ -109,10 +114,25 @@ const payload = (data: Household) => ({
 });
 
 // Background saves stay on the page; "continue" saves and moves to the next step.
+// The revision this page last saw: it only moves on after a successful save,
+// so a refused save (a teammate saved first) keeps being refused until a reload.
+const revision = ref(props.revision);
+
 const send = (options: VisitOptions, next = false) =>
     form
-        .transform((data) => ({ ...payload(data), continue: next }))
-        .put('/menage', options);
+        .transform((data) => ({
+            ...payload(data),
+            revision: revision.value,
+            continue: next,
+        }))
+        .put('/menage', {
+            ...options,
+            onSuccess: (page) => {
+                revision.value = props.revision;
+
+                return options.onSuccess?.(page);
+            },
+        });
 
 const complete = () =>
     form.members.every((m) => m.name.trim()) &&
@@ -654,6 +674,8 @@ defineOptions({ inheritAttrs: false });
                 </div>
             </aside>
         </div>
+
+        <ConflictNotice :visible="'conflict' in form.errors" />
 
         <SaveBar
             :status="status"

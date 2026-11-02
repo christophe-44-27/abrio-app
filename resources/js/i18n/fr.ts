@@ -13,14 +13,15 @@ const fr = {
         home: "Abrio, retour à l'accueil",
         switchText: 'EN',
         start: 'Commencer',
+        login: 'Se connecter',
         app: 'Mon espace',
     },
     hero: {
         title: "Vois ce qu'il te reste à la fin du mois.",
-        text: "Abrio compare tes logements selon le budget de ton ménage. Chacun voit sa part du loyer et ce qu'il lui reste, et chaque logement reçoit un verdict clair.",
+        text: "Abrio compare tes logements selon le budget de ton ménage. Chacun voit sa part du loyer et ce qu'il lui reste, et chaque logement reçoit un résultat clair.",
         cta: 'Commencer gratuitement',
         secondary: 'Voir comment ça marche',
-        note: "Gratuit jusqu'à 3 logements.",
+        note: "Gratuit jusqu'à 2 logements.",
         goBadge: 'Abordable',
         noBadge: 'Hors budget',
         shareOfIncome: '{percent} de ton revenu',
@@ -43,12 +44,12 @@ const fr = {
                 text: "Le loyer, le chauffage et l'électricité, le stationnement. Tout ce que l'annonce ne dit pas, additionné à ta place.",
             },
             {
-                title: 'Un verdict clair',
+                title: 'Un résultat clair',
                 text: "Au-delà de 30 % de ton revenu net, c'est trop. Chaque logement est classé, avec la part de chacun et ce qu'il lui reste.",
             },
             {
                 title: 'Un résultat à garder',
-                text: 'Exporte tes verdicts en PDF pour en discuter à deux, ou pour les garder sous la main pendant les visites.',
+                text: 'Exporte ta comparaison en PDF pour en discuter à deux, ou pour les garder sous la main pendant les visites.',
             },
         ],
     },
@@ -64,7 +65,7 @@ const fr = {
                 text: "Le loyer, le chauffage et l'électricité, le stationnement et les frais ponctuels. Ce que tu vois dans l'annonce et à la visite.",
             },
             {
-                title: 'Lis le verdict',
+                title: 'Lis le résultat',
                 text: "Chaque logement passe ou ne passe pas. Tu vois la part de chacun et ce qu'il te reste à la fin du mois.",
             },
         ],
@@ -87,7 +88,7 @@ const fr = {
             },
             {
                 title: 'Le revenu net, pas le brut',
-                text: 'Plusieurs calculateurs appliquent les 30 % au revenu brut. Abrio part de ce qui entre réellement dans ton compte, ce qui rend le verdict plus prudent et plus proche de ta vie de tous les jours.',
+                text: 'Plusieurs calculateurs appliquent les 30 % au revenu brut. Abrio part de ce qui entre réellement dans ton compte, ce qui rend le résultat plus prudent et plus proche de ta vie de tous les jours.',
             },
         ],
     },
@@ -98,9 +99,9 @@ const fr = {
             name: 'Gratuit',
             price: '0 $',
             perks: [
-                "Jusqu'à 3 logements",
+                "Jusqu'à 2 logements",
                 'Budget du ménage complet',
-                'Part de chacun et verdicts',
+                'Part de chacun et résultats',
             ],
             cta: 'Commencer',
         },
@@ -111,7 +112,9 @@ const fr = {
             perks: [
                 'Tout ce qui est gratuit',
                 'Logements illimités',
-                'Export des verdicts en PDF',
+                'Invite jusqu’à 4 personnes à modifier le budget avec toi',
+                'Lien public pour partager la comparaison',
+                'Export de la comparaison en PDF',
             ],
             cta: 'Débloquer pour 9,99 $',
         },
@@ -129,7 +132,7 @@ const fr = {
         items: [
             {
                 q: "Qu'est-ce qu'Abrio, exactement?",
-                a: "Un outil qui compare plusieurs logements selon le budget de ton ménage. Il calcule la part de chacun, le coût réel du logement et ce qu'il te reste à la fin du mois, puis donne un verdict.",
+                a: "Un outil qui compare plusieurs logements selon le budget de ton ménage. Il calcule la part de chacun, le coût réel du logement et ce qu'il te reste à la fin du mois, puis donne un résultat.",
             },
             {
                 q: 'Pourquoi 30 % du revenu net?',
@@ -141,7 +144,7 @@ const fr = {
             },
             {
                 q: 'Combien de logements puis-je comparer gratuitement?',
-                a: 'Trois. Pour en comparer davantage, tu débloques Abrio une seule fois pour 9,99 $.',
+                a: 'Deux. Pour en comparer davantage, tu débloques Abrio une seule fois pour 9,99 $.',
             },
             {
                 q: 'Le paiement de 9,99 $ est-il vraiment unique?',
@@ -153,7 +156,7 @@ const fr = {
             },
             {
                 q: 'Abrio remplace-t-il un conseil financier?',
-                a: "Non. Abrio est un outil d'estimation. Les verdicts reposent sur les montants que tu entres et sur la règle des 30 %.",
+                a: "Non. Abrio est un outil d'estimation. Les résultats reposent sur les montants que tu entres et sur la règle des 30 %.",
             },
         ],
     },
@@ -182,12 +185,12 @@ const fr = {
                     text: 'Le loyer, le chauffage, le stationnement, tout ce que tu vois à la visite.',
                 },
                 {
-                    title: 'Le verdict',
+                    title: 'Le résultat',
                     text: "Chaque logement est classé, avec la part de chacun et ce qu'il te reste.",
                 },
             ],
             cta: 'Commencer',
-            note: "Gratuit jusqu'à 3 logements.",
+            note: "Gratuit jusqu'à 2 logements.",
         },
         people: {
             metaTitle: 'Qui vit avec toi',
@@ -205,7 +208,7 @@ const fr = {
     },
     household: {
         metaTitle: 'Ton ménage',
-        steps: ['1 · Ton ménage', '2 · Logements', '3 · Verdict'],
+        steps: ['1 · Ton ménage', '2 · Logements', '3 · Comparaison'],
         title: 'Ton ménage',
         text: 'Les revenus et les charges de chaque personne. Les charges communes se partagent selon le revenu de chacun.',
         income: {
@@ -270,12 +273,12 @@ const fr = {
         oneTime: 'Frais ponctuels, une seule fois (déménagement, dépôt, etc.)',
         monthlyCost: 'Coût mensuel réel',
         back: 'Mon ménage',
-        next: 'Voir les verdicts',
-        needOne: 'Ajoute au moins un logement pour voir les verdicts.',
+        next: 'Voir la comparaison',
+        needOne: 'Ajoute au moins un logement pour voir la comparaison.',
     },
     verdicts: {
-        metaTitle: 'Tes verdicts',
-        title: 'Tes verdicts',
+        metaTitle: 'Ta comparaison',
+        title: 'Ta comparaison',
         text: '{count} logements classés selon la part de ton revenu net qu’ils prennent. Au-delà de 30 %, c’est trop.',
         textOne:
             '1 logement classé selon la part de ton revenu net qu’il prend. Au-delà de 30 %, c’est trop.',
@@ -300,16 +303,21 @@ const fr = {
         edit: 'Modifier les logements',
         exportPdf: 'Exporter en PDF',
         unlocked:
-            'Abrio est débloqué : logements illimités et export PDF. Merci!',
+            'Abrio est débloqué : logements illimités, invitations, lien public et export PDF. Merci!',
     },
     limit: {
         badge: 'Limite atteinte',
-        title: 'Tu as comparé 3 logements',
-        text: "La version gratuite s'arrête à 3 logements. Débloque Abrio une seule fois pour en ajouter autant que tu veux.",
+        title: 'Tu as comparé 2 logements',
+        text: "La version gratuite s'arrête à 2 logements. Débloque Abrio une seule fois pour en ajouter autant que tu veux.",
         pdfTitle: "L'export PDF est inclus dans la version illimitée",
         price: '9,99 $',
         priceNote: 'une seule fois, pour toujours',
-        perks: ['Logements illimités', 'Export des verdicts en PDF'],
+        perks: [
+            'Logements illimités',
+            'Export de la comparaison en PDF',
+            'Invite tes proches à modifier le budget avec toi',
+            'Lien public pour partager la comparaison',
+        ],
         unlock: 'Débloquer pour 9,99 $',
         later: 'Pas maintenant',
         pending: {
@@ -324,7 +332,7 @@ const fr = {
         menu: 'Menu du compte',
         household: 'Mon ménage',
         housings: 'Mes logements',
-        verdicts: 'Mes verdicts',
+        verdicts: 'Ma comparaison',
         home: 'Retour au site',
         settings: 'Paramètres du compte',
         logout: 'Se déconnecter',
@@ -336,19 +344,55 @@ const fr = {
             label: 'Paramètres',
             profile: 'Profil',
             premium: 'Premium',
+            team: 'Partage',
             security: 'Sécurité',
         },
         cancel: 'Annuler',
+        team: {
+            metaTitle: 'Partage',
+            title: 'Partage',
+            description:
+                'Partage ton budget et tes logements : chaque personne invitée voit et modifie les mêmes informations.',
+            noHousehold: 'Crée d’abord ton ménage pour pouvoir inviter des personnes.',
+            owner: 'Propriétaire',
+            you: 'Toi',
+            remove: 'Retirer',
+            removeConfirm: 'Retirer {name} de ce budget?',
+            leave: 'Quitter ce budget',
+            leaveConfirm: 'Quitter ce budget? Tu perdras l’accès à ces informations.',
+            lockedTitle: 'Invite tes proches avec la version illimitée',
+            lockedText:
+                'Plus besoin de tout remplir à deux : invite une personne par courriel et elle modifie le budget avec toi.',
+            unlock: 'Débloquer pour 9,99 $',
+            inviteTitle: 'Inviter quelqu’un',
+            inviteText:
+                'Elle reçoit un courriel pour créer son compte. Elle peut tout modifier, sauf retirer des gens ou gérer le paiement.',
+            email: 'Courriel',
+            invite: 'Envoyer l’invitation',
+            seats: '{n} place(s) restante(s) sur {max}',
+            pending: 'Invitations en attente',
+            expired: 'expirée',
+            cancelInvitation: 'Annuler',
+            resend: 'Renvoyer',
+            shareTitle: 'Lien public de la comparaison',
+            shareText:
+                'Toute personne qui a ce lien voit la comparaison, sans compte, ainsi que les revenus et dépenses qui servent aux calculs. Tu peux le désactiver à tout moment.',
+            shareStart: 'Activer le lien public',
+            shareStop: 'Désactiver le lien',
+            copy: 'Copier',
+            copied: 'Copié',
+        },
         premium: {
             metaTitle: 'Premium',
             title: 'Abrio Premium',
             description:
-                'Passe à la version illimitée sans attendre d’atteindre la limite de 3 logements.',
+                'Passe à la version illimitée sans attendre d’atteindre la limite de 2 logements.',
             descriptionUnlocked: 'Ta version illimitée est active.',
             active: 'Premium actif',
             since: 'depuis le {date}.',
             free: 'Version gratuite : jusqu’à {n} logements.',
             invoice: 'Voir ma facture',
+            viaTeam: 'Ton accès illimité vient de la personne qui t’a invité(e) sur Abrio.',
         },
         profile: {
             metaTitle: 'Profil',
@@ -443,6 +487,26 @@ const fr = {
             password: 'Mot de passe',
         },
     },
+    conflict: {
+        text: 'Quelqu’un qui partage ce budget vient de modifier ces informations. Recharge la page pour voir ses changements, puis refais les tiens.',
+        reload: 'Recharger',
+    },
+    invitation: {
+        metaTitle: 'Invitation',
+        invalidTitle: 'Invitation introuvable',
+        invalidText:
+            'Ce lien a expiré ou a déjà servi. Demande à la personne qui t’a invité(e) de t’en envoyer un nouveau.',
+        title: '{inviter} t’invite sur Abrio',
+        text: 'Vous partagerez le même budget et les mêmes logements. Tu pourras tout modifier.',
+        accept: 'Accepter l’invitation',
+        wrongTitle: 'Ce n’est pas la bonne adresse',
+        wrongText:
+            'Cette invitation est pour {email}. Connecte-toi avec ce compte pour l’accepter.',
+        unavailableTitle: 'Tu as déjà un budget',
+        unavailableText:
+            'Ton compte a déjà son propre budget ou partage déjà le budget de quelqu’un, donc il ne peut pas rejoindre celui-ci.',
+        home: 'Retour à mon espace',
+    },
     save: {
         upToDate: 'Tout est enregistré',
         saved: 'Enregistré',
@@ -470,7 +534,7 @@ const fr = {
             metaTitle: 'Créer un compte',
             title: 'Crée ton compte',
             description:
-                'Quelques informations et tu peux commencer. Gratuit jusqu’à 3 logements.',
+                'Quelques informations et tu peux commencer. Gratuit jusqu’à 2 logements.',
             name: "Nom d'affichage",
             email: 'Courriel',
             country: 'Pays de résidence',
@@ -482,6 +546,9 @@ const fr = {
             password: 'Mot de passe',
             passwordConfirm: 'Confirmer le mot de passe',
             submit: 'Créer mon compte',
+            invitedTitle: '{inviter} t’invite sur Abrio',
+            invitedDescription:
+                'Crée ton compte avec cette adresse pour rejoindre son budget. C’est gratuit pour toi.',
             haveAccount: 'Déjà un compte?',
             logIn: 'Se connecter',
         },

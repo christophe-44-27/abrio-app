@@ -17,7 +17,8 @@ class PremiumController extends Controller
 
         return Inertia::render('settings/Premium', [
             'unlocked' => $user->isUnlocked(),
-            'unlockedAt' => $user->unlocked_at?->toIso8601String(),
+            'unlockedAt' => ($user->hasPaid() ? $user : $user->joinedHousehold?->user)?->unlocked_at?->toIso8601String(),
+            'isMember' => $user->joined_household_id !== null,
             'hasInvoice' => $user->isUnlocked() && filled($user->unlock_checkout_session_id),
             'housingLimit' => $user->housingLimit(),
         ]);
@@ -30,11 +31,11 @@ class PremiumController extends Controller
     {
         $sessionId = $request->user()->unlock_checkout_session_id;
 
-        abort_unless($sessionId, 404);
+        abort_if(blank($sessionId), 404);
 
         $url = $checkout->invoiceUrl($sessionId);
 
-        abort_unless($url, 404);
+        abort_if($url === null, 404);
 
         return redirect()->away($url);
     }

@@ -15,14 +15,15 @@ const en: Messages = {
         home: 'Abrio, back to the home page',
         switchText: 'FR',
         start: 'Get started',
+        login: 'Log in',
         app: 'My space',
     },
     hero: {
         title: "See what's left at the end of the month.",
-        text: 'Abrio compares your housing options against your household budget. Everyone sees their share of the rent and what they have left, and every place gets a clear verdict.',
+        text: 'Abrio compares your housing options against your household budget. Everyone sees their share of the rent and what they have left, and every place gets a clear result.',
         cta: 'Start for free',
         secondary: 'See how it works',
-        note: 'Free for up to 3 places.',
+        note: 'Free for up to 2 places.',
         goBadge: 'Affordable',
         noBadge: 'Over budget',
         shareOfIncome: '{percent} of your income',
@@ -45,12 +46,12 @@ const en: Messages = {
                 text: "Rent, heating and electricity, parking. Everything the listing doesn't tell you, added up for you.",
             },
             {
-                title: 'A clear verdict',
+                title: 'A clear result',
                 text: "Above 30% of your net income, it's too much. Every place is ranked, with each person's share and what they have left.",
             },
             {
                 title: 'A result to keep',
-                text: 'Export your verdicts as a PDF to talk it over together, or keep it handy during visits.',
+                text: 'Export your comparison as a PDF to talk it over together, or keep it handy during visits.',
             },
         ],
     },
@@ -66,7 +67,7 @@ const en: Messages = {
                 text: 'Rent, heating and electricity, parking and one-time costs. What you see in the listing and at the visit.',
             },
             {
-                title: 'Read the verdict',
+                title: 'Read the result',
                 text: "Each place passes or it doesn't. You see everyone's share and what you have left at the end of the month.",
             },
         ],
@@ -89,7 +90,7 @@ const en: Messages = {
             },
             {
                 title: 'Net income, not gross',
-                text: 'Many calculators apply the 30% to gross income. Abrio starts from what actually lands in your account, which makes the verdict more cautious and closer to your everyday life.',
+                text: 'Many calculators apply the 30% to gross income. Abrio starts from what actually lands in your account, which makes the result more cautious and closer to your everyday life.',
             },
         ],
     },
@@ -100,9 +101,9 @@ const en: Messages = {
             name: 'Free',
             price: '$0',
             perks: [
-                'Up to 3 places',
+                'Up to 2 places',
                 'Full household budget',
-                "Everyone's share and verdicts",
+                "Everyone's share and results",
             ],
             cta: 'Get started',
         },
@@ -113,7 +114,9 @@ const en: Messages = {
             perks: [
                 'Everything in Free',
                 'Unlimited places',
-                'PDF export of your verdicts',
+                'Invite up to 4 people to edit the budget with you',
+                'Public link to share the comparison',
+                'PDF export of your comparison',
             ],
             cta: 'Unlock for $9.99',
         },
@@ -131,7 +134,7 @@ const en: Messages = {
         items: [
             {
                 q: 'What exactly is Abrio?',
-                a: "A tool that compares several places against your household budget. It calculates each person's share, the real cost of housing and what you have left at the end of the month, then gives a verdict.",
+                a: "A tool that compares several places against your household budget. It calculates each person's share, the real cost of housing and what you have left at the end of the month, then gives a result.",
             },
             {
                 q: 'Why 30% of net income?',
@@ -143,7 +146,7 @@ const en: Messages = {
             },
             {
                 q: 'How many places can I compare for free?',
-                a: 'Three. To compare more, you unlock Abrio once for $9.99.',
+                a: 'Two. To compare more, you unlock Abrio once for $9.99.',
             },
             {
                 q: 'Is the $9.99 payment really one-time?',
@@ -155,7 +158,7 @@ const en: Messages = {
             },
             {
                 q: 'Does Abrio replace financial advice?',
-                a: 'No. Abrio is an estimation tool. Verdicts rely on the amounts you enter and on the 30% rule.',
+                a: 'No. Abrio is an estimation tool. Results rely on the amounts you enter and on the 30% rule.',
             },
         ],
     },
@@ -184,12 +187,12 @@ const en: Messages = {
                     text: 'Rent, heating, parking, everything you see at the visit.',
                 },
                 {
-                    title: 'The verdict',
+                    title: 'The result',
                     text: "Every place is ranked, with each person's share and what you have left.",
                 },
             ],
             cta: 'Get started',
-            note: 'Free for up to 3 places.',
+            note: 'Free for up to 2 places.',
         },
         people: {
             metaTitle: 'Who lives with you',
@@ -207,7 +210,7 @@ const en: Messages = {
     },
     household: {
         metaTitle: 'Your household',
-        steps: ['1 · Your household', '2 · Places', '3 · Verdict'],
+        steps: ['1 · Your household', '2 · Places', '3 · Comparison'],
         title: 'Your household',
         text: "Each person's income and expenses. Shared expenses are split according to each person's income.",
         income: {
@@ -272,12 +275,12 @@ const en: Messages = {
         oneTime: 'One-time costs (moving, deposit, etc.)',
         monthlyCost: 'Real monthly cost',
         back: 'My household',
-        next: 'See the verdicts',
-        needOne: 'Add at least one place to see the verdicts.',
+        next: 'See the comparison',
+        needOne: 'Add at least one place to see the comparison.',
     },
     verdicts: {
-        metaTitle: 'Your verdicts',
-        title: 'Your verdicts',
+        metaTitle: 'Your comparison',
+        title: 'Your comparison',
         text: '{count} places ranked by the share of your net income they take. Above 30%, it’s too much.',
         textOne:
             '1 place ranked by the share of your net income it takes. Above 30%, it’s too much.',
@@ -302,16 +305,21 @@ const en: Messages = {
         edit: 'Edit places',
         exportPdf: 'Export as PDF',
         unlocked:
-            'Abrio is unlocked: unlimited places and PDF export. Thank you!',
+            'Abrio is unlocked: unlimited places, invitations, public link and PDF export. Thank you!',
     },
     limit: {
         badge: 'Limit reached',
-        title: "You've compared 3 places",
-        text: 'The free version stops at 3 places. Unlock Abrio once to add as many as you want.',
+        title: "You've compared 2 places",
+        text: 'The free version stops at 2 places. Unlock Abrio once to add as many as you want.',
         pdfTitle: 'PDF export is included in the unlimited version',
         price: '$9.99',
         priceNote: 'one-time, forever',
-        perks: ['Unlimited places', 'PDF export of your verdicts'],
+        perks: [
+            'Unlimited places',
+            'PDF export of your comparison',
+            'Invite people to edit the budget with you',
+            'Public link to share the comparison',
+        ],
         unlock: 'Unlock for $9.99',
         later: 'Not now',
         pending: {
@@ -326,7 +334,7 @@ const en: Messages = {
         menu: 'Account menu',
         household: 'My household',
         housings: 'My housings',
-        verdicts: 'My verdicts',
+        verdicts: 'My comparison',
         home: 'Back to the site',
         settings: 'Account settings',
         logout: 'Log out',
@@ -338,19 +346,55 @@ const en: Messages = {
             label: 'Settings',
             profile: 'Profile',
             premium: 'Premium',
+            team: 'Sharing',
             security: 'Security',
         },
         cancel: 'Cancel',
+        team: {
+            metaTitle: 'Sharing',
+            title: 'Sharing',
+            description:
+                'Share your budget and your places: everyone you invite sees and edits the same information.',
+            noHousehold: 'Set up your household first, then you can invite people.',
+            owner: 'Owner',
+            you: 'You',
+            remove: 'Remove',
+            removeConfirm: 'Remove {name} from this budget?',
+            leave: 'Leave this budget',
+            leaveConfirm: 'Leave this budget? You will lose access to this information.',
+            lockedTitle: 'Invite people with the unlimited version',
+            lockedText:
+                'No need to fill everything in together: invite someone by email and they edit the budget with you.',
+            unlock: 'Unlock for $9.99',
+            inviteTitle: 'Invite someone',
+            inviteText:
+                'They get an email to create their account. They can edit everything, except remove people or manage payment.',
+            email: 'Email',
+            invite: 'Send invitation',
+            seats: '{n} seat(s) left out of {max}',
+            pending: 'Pending invitations',
+            expired: 'expired',
+            cancelInvitation: 'Cancel',
+            resend: 'Resend',
+            shareTitle: 'Public comparison link',
+            shareText:
+                'Anyone with this link sees the comparison, no account needed, along with the incomes and expenses behind the numbers. You can turn it off at any time.',
+            shareStart: 'Turn on the public link',
+            shareStop: 'Turn off the link',
+            copy: 'Copy',
+            copied: 'Copied',
+        },
         premium: {
             metaTitle: 'Premium',
             title: 'Abrio Premium',
             description:
-                'Go unlimited now, without waiting to hit the 3-place limit.',
+                'Go unlimited now, without waiting to hit the 2-place limit.',
             descriptionUnlocked: 'Your unlimited version is active.',
             active: 'Premium active',
             since: 'since {date}.',
             free: 'Free version: up to {n} places.',
             invoice: 'View my invoice',
+            viaTeam: 'Your unlimited access comes from the person who invited you to Abrio.',
         },
         profile: {
             metaTitle: 'Profile',
@@ -442,6 +486,26 @@ const en: Messages = {
             password: 'Password',
         },
     },
+    conflict: {
+        text: 'Someone sharing this budget just changed this information. Reload the page to see their changes, then redo yours.',
+        reload: 'Reload',
+    },
+    invitation: {
+        metaTitle: 'Invitation',
+        invalidTitle: 'Invitation not found',
+        invalidText:
+            'This link has expired or was already used. Ask the person who invited you to send a new one.',
+        title: '{inviter} invited you to Abrio',
+        text: 'You will share the same budget and the same places. You will be able to edit everything.',
+        accept: 'Accept the invitation',
+        wrongTitle: 'Wrong address',
+        wrongText:
+            'This invitation is for {email}. Sign in with that account to accept it.',
+        unavailableTitle: 'You already have a budget',
+        unavailableText:
+            'Your account already has its own budget or already shares someone else’s budget, so it cannot join this one.',
+        home: 'Back to my space',
+    },
     save: {
         upToDate: 'Everything is saved',
         saved: 'Saved',
@@ -469,7 +533,7 @@ const en: Messages = {
             metaTitle: 'Create an account',
             title: 'Create your account',
             description:
-                'A few details and you can start. Free for up to 3 places.',
+                'A few details and you can start. Free for up to 2 places.',
             name: 'Display name',
             email: 'Email',
             country: 'Country of residence',
@@ -481,6 +545,9 @@ const en: Messages = {
             password: 'Password',
             passwordConfirm: 'Confirm password',
             submit: 'Create my account',
+            invitedTitle: '{inviter} invited you to Abrio',
+            invitedDescription:
+                'Create your account with this address to join their budget. It is free for you.',
             haveAccount: 'Already have an account?',
             logIn: 'Log in',
         },

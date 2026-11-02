@@ -39,7 +39,7 @@ class UnlockAccountOnPayment
 
         $userId = $session['client_reference_id'] ?? null;
 
-        if ($userId && $user = User::find($userId)) {
+        if ($userId && $user = User::whereKey($userId)->first()) {
             $user->markUnlocked($session['id'] ?? null);
         }
     }

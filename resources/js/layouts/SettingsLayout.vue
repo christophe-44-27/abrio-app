@@ -17,6 +17,7 @@ const { isCurrentOrParentUrl } = useCurrentUrl();
 const items = [
     { key: 'profile', href: editProfile() },
     { key: 'premium', href: editPremium() },
+    { key: 'team', href: '/settings/team' },
     { key: 'security', href: editSecurity() },
 ] as const;
 </script>

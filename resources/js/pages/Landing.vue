@@ -132,6 +132,13 @@ defineOptions({ inheritAttrs: false });
                     >
                         {{ signedIn ? t.nav.app : t.nav.start }}
                     </Link>
+                    <Link
+                        v-if="!signedIn"
+                        href="/login"
+                        class="flex h-11 items-center rounded-xl border border-[#2B1D14] px-5.5 hover:bg-white"
+                    >
+                        {{ t.nav.login }}
+                    </Link>
                 </nav>
             </div>
         </header>

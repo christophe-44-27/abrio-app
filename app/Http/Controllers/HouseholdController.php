@@ -16,7 +16,7 @@ class HouseholdController extends Controller
      */
     public function people(Request $request): Response
     {
-        $household = $request->user()->household;
+        $household = $request->user()->currentHousehold();
 
         return Inertia::render('onboarding/Menage', [
             'people' => $household
@@ -33,10 +33,10 @@ class HouseholdController extends Controller
             'people.*.name' => ['required', 'string', 'max:50'],
         ]);
 
-        $household = $request->user()->household;
-        $existing = collect($household?->members ?? [])->keyBy('id');
+        $household = $request->user()->currentHousehold();
+        $existing = collect($household->members ?? [])->keyBy('id');
 
-        $members = collect($data['people'])->map(function (array $person) use ($existing) {
+        $members = array_values(array_map(function (array $person) use ($existing) {
             $current = $existing->get($person['id'] ?? '');
 
             return [
@@ -44,25 +44,28 @@ class HouseholdController extends Controller
                 'name' => $person['name'],
                 'income' => $current['income'] ?? 0,
             ];
-        })->values()->all();
+        }, $data['people']));
 
         $ids = array_column($members, 'id');
 
-        $personal = collect($household?->personal_expenses ?? [])->map(fn (array $expense) => [
+        $personal = array_map(fn (array $expense) => [
             ...$expense,
             'amounts' => collect($ids)
                 ->mapWithKeys(fn ($id) => [$id => $expense['amounts'][$id] ?? 0])
                 ->all(),
-        ])->all();
+        ], $household->personal_expenses ?? []);
 
-        Household::updateOrCreate(
-            ['user_id' => $request->user()->id],
-            [
-                'members' => $members,
-                'common_expenses' => $household?->common_expenses ?? [],
-                'personal_expenses' => $personal,
-            ],
-        );
+        $attributes = [
+            'members' => $members,
+            'common_expenses' => $household->common_expenses ?? [],
+            'personal_expenses' => $personal,
+        ];
+
+        if ($household) {
+            $household->saveEdit($attributes);
+        } else {
+            Household::create(['user_id' => $request->user()->id, ...$attributes]);
+        }
 
         return redirect()->route('household.edit');
     }
@@ -72,7 +75,7 @@ class HouseholdController extends Controller
      */
     public function edit(Request $request): Response|RedirectResponse
     {
-        $household = $request->user()->household;
+        $household = $request->user()->currentHousehold();
 
         if (! $household) {
             return redirect()->route('onboarding.menage');
@@ -80,14 +83,15 @@ class HouseholdController extends Controller
 
         return Inertia::render('household/Edit', [
             'household' => $household->only(['members', 'common_expenses', 'personal_expenses']),
+            'revision' => $household->revision,
         ]);
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $household = $request->user()->household;
+        $household = $request->user()->currentHousehold();
 
-        abort_unless($household, 404);
+        abort_if($household === null, 404);
 
         $money = ['required', 'numeric', 'min:0', 'max:10000000'];
 
@@ -105,32 +109,34 @@ class HouseholdController extends Controller
             'personal_expenses.*.name' => ['required', 'string', 'max:80'],
             'personal_expenses.*.amounts' => ['present', 'array'],
             'personal_expenses.*.amounts.*' => $money,
+            'revision' => ['nullable', 'integer'],
         ]);
 
         $ids = array_column($data['members'], 'id');
 
-        $household->update([
-            'members' => collect($data['members'])
-                ->map(fn (array $m) => [
-                    'id' => $m['id'],
-                    'name' => $m['name'],
-                    'income' => (float) $m['income'],
-                ])->values()->all(),
-            'common_expenses' => collect($data['common_expenses'])
-                ->map(fn (array $e) => [
-                    'id' => $e['id'],
-                    'name' => $e['name'],
-                    'amount' => (float) $e['amount'],
-                ])->values()->all(),
-            'personal_expenses' => collect($data['personal_expenses'])
-                ->map(fn (array $e) => [
-                    'id' => $e['id'],
-                    'name' => $e['name'],
-                    'amounts' => collect($ids)
-                        ->mapWithKeys(fn ($id) => [$id => (float) ($e['amounts'][$id] ?? 0)])
-                        ->all(),
-                ])->values()->all(),
-        ]);
+        $saved = $household->saveEdit([
+            'members' => array_values(array_map(fn (array $m) => [
+                'id' => $m['id'],
+                'name' => $m['name'],
+                'income' => (float) $m['income'],
+            ], $data['members'])),
+            'common_expenses' => array_values(array_map(fn (array $e) => [
+                'id' => $e['id'],
+                'name' => $e['name'],
+                'amount' => (float) $e['amount'],
+            ], $data['common_expenses'])),
+            'personal_expenses' => array_values(array_map(fn (array $e) => [
+                'id' => $e['id'],
+                'name' => $e['name'],
+                'amounts' => collect($ids)
+                    ->mapWithKeys(fn ($id) => [$id => (float) ($e['amounts'][$id] ?? 0)])
+                    ->all(),
+            ], $data['personal_expenses'])),
+        ], $data['revision'] ?? null);
+
+        if (! $saved) {
+            return back()->withErrors(['conflict' => __('team.conflict')]);
+        }
 
         // Background saves ("continue" absent) stay on the page.
         return $request->boolean('continue')

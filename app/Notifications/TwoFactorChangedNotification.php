@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -26,10 +27,10 @@ class TwoFactorChangedNotification extends Notification
         return ['mail'];
     }
 
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(User $notifiable): MailMessage
     {
         $locale = $this->locale ?? 'fr';
-        $when = now()->locale($locale)->isoFormat('LLLL');
+        $when = now()->settings(['locale' => $locale])->isoFormat('LLLL');
         $where = $this->ip ? " ({$this->ip})" : '';
         $state = __('mail.two_factor.'.($this->enabled ? 'enabled' : 'disabled'), [], $locale);
 

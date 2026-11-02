@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,23 +23,30 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string $country
+ * @property string|null $province
  * @property Carbon|null $email_verified_at
+ * @property Carbon|null $unlocked_at
+ * @property string|null $unlock_checkout_session_id
  * @property string $password
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property Carbon|null $two_factor_confirmed_at
  * @property string|null $remember_token
+ * @property int|null $joined_household_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Household|null $household
+ * @property-read Household|null $joinedHousehold
  */
-#[Fillable(['name', 'email', 'country', 'province', 'password'])]
+#[Fillable(['name', 'email', 'country', 'province', 'password', 'joined_household_id'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
     use Billable, HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
 
-    public const FREE_HOUSING_LIMIT = 3;
+    public const FREE_HOUSING_LIMIT = 2;
 
     /**
      * Send a 6-digit code to verify the email address, instead of a link.
@@ -50,9 +58,20 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
         $this->notify(new VerifyEmailCodeNotification($code, app()->getLocale()));
     }
 
-    public function isUnlocked(): bool
+    /**
+     * Whether this user bought the unlock themselves (the household owner).
+     */
+    public function hasPaid(): bool
     {
         return $this->unlocked_at !== null;
+    }
+
+    /**
+     * Unlocked by their own purchase, or by the owner of the household they joined.
+     */
+    public function isUnlocked(): bool
+    {
+        return $this->hasPaid() || $this->joinedHousehold?->isUnlocked() === true;
     }
 
     /**
@@ -77,11 +96,36 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     }
 
     /**
+     * The household this user owns.
+     *
      * @return HasOne<Household, $this>
      */
     public function household(): HasOne
     {
         return $this->hasOne(Household::class);
+    }
+
+    /**
+     * The household this user was invited into.
+     *
+     * @return BelongsTo<Household, $this>
+     */
+    public function joinedHousehold(): BelongsTo
+    {
+        return $this->belongsTo(Household::class, 'joined_household_id');
+    }
+
+    /**
+     * The household the user works on: their own, or the one they joined.
+     */
+    public function currentHousehold(): ?Household
+    {
+        return $this->household ?? $this->joinedHousehold;
+    }
+
+    public function ownsHousehold(Household $household): bool
+    {
+        return $household->user_id === $this->id;
     }
 
     /**

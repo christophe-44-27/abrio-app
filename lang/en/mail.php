@@ -20,6 +20,15 @@ return [
         'action' => 'Change my password',
     ],
 
+    'invitation' => [
+        'hello' => 'Hello,',
+        'subject' => ':inviter invited you to Abrio',
+        'intro' => ':inviter invited you to Abrio to compare places together.',
+        'details' => 'Create your account in a minute: you will then both see and edit the same budget.',
+        'action' => 'Accept the invitation',
+        'expires' => 'This link expires in :days days. Don’t know :inviter? Just ignore this email.',
+    ],
+
     'contact' => [
         'subject' => 'Abrio contact: :name',
         'from' => '**From:** :name (:email)',

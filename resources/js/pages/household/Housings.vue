@@ -4,6 +4,7 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { ArrowLeft, Plus } from '@lucide/vue';
 import BrandLink from '@/components/BrandLink.vue';
+import ConflictNotice from '@/components/ConflictNotice.vue';
 import InputError from '@/components/InputError.vue';
 import LimiteLogementsDialog from '@/components/LimiteLogementsDialog.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
@@ -24,6 +25,8 @@ import { newId } from '@/lib/id';
 const props = defineProps<{
     household: Household;
     housings: Housing[];
+    /** Bumped by every save, so a stale page cannot overwrite a teammate. */
+    revision: number;
     /** null when unlimited */
     limit: number | null;
 }>();
@@ -92,10 +95,25 @@ const payload = (data: { housings: Housing[] }) => ({
 });
 
 // Background saves stay on the page; "continue" saves and moves to the verdicts.
+// The revision this page last saw: it only moves on after a successful save,
+// so a refused save (a teammate saved first) keeps being refused until a reload.
+const revision = ref(props.revision);
+
 const send = (options: VisitOptions, next = false) =>
     form
-        .transform((data) => ({ ...payload(data), continue: next }))
-        .put('/logements', options);
+        .transform((data) => ({
+            ...payload(data),
+            revision: revision.value,
+            continue: next,
+        }))
+        .put('/logements', {
+            ...options,
+            onSuccess: (page) => {
+                revision.value = props.revision;
+
+                return options.onSuccess?.(page);
+            },
+        });
 
 const { status, savedAt, saveNow } = useManualSave({
     snapshot: () => payload(form.data()),
@@ -367,6 +385,8 @@ defineOptions({ inheritAttrs: false });
                 t.housings.needOne
             }}</span>
         </div>
+
+        <ConflictNotice :visible="'conflict' in form.errors" />
 
         <SaveBar
             :status="status"

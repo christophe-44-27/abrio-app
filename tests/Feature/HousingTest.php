@@ -63,17 +63,17 @@ class HousingTest extends TestCase
         $this->assertEquals(0, $household->fresh()->housings[0]['heating_amount']);
     }
 
-    public function test_free_accounts_are_limited_to_three_housings(): void
+    public function test_free_accounts_are_limited_to_two_housings(): void
     {
         $household = Household::factory()->create();
-        $four = array_map(fn ($id) => $this->housing($id), ['a', 'b', 'c', 'd']);
+        $three = array_map(fn ($id) => $this->housing($id), ['a', 'b', 'c']);
 
         $this->actingAs($household->user)
-            ->put(route('housings.update'), ['housings' => $four])
+            ->put(route('housings.update'), ['housings' => $three])
             ->assertSessionHasErrors('housings');
 
         $this->actingAs($household->user)
-            ->put(route('housings.update'), ['housings' => array_slice($four, 0, 3)])
+            ->put(route('housings.update'), ['housings' => array_slice($three, 0, 2)])
             ->assertSessionHasNoErrors();
     }
 

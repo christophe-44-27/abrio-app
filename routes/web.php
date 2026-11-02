@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\EmailCodeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\HousingController;
+use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\SharedVerdictController;
 use App\Http\Controllers\UnlockController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Http\Request;
@@ -33,6 +35,14 @@ Route::post('locale/{locale}', function (string $locale) {
     return back();
 })->whereIn('locale', SetLocale::LOCALES)->name('locale.update');
 
+Route::get('invitations/{token}', [InvitationController::class, 'show'])
+    ->middleware('throttle:20,1')
+    ->name('invitations.show');
+
+Route::get('v/{token}', [SharedVerdictController::class, 'show'])
+    ->middleware('throttle:60,1')
+    ->name('shared.verdicts');
+
 Route::post('email/verify-code', [EmailCodeController::class, 'store'])
     ->middleware(['auth', 'throttle:6,1'])
     ->name('verification.code');
@@ -49,6 +59,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('logements', [HousingController::class, 'update'])->name('housings.update');
     Route::get('verdicts', [HousingController::class, 'verdicts'])->name('verdicts');
 
+    Route::post('invitations/{token}', [InvitationController::class, 'accept'])->name('invitations.accept');
+
     Route::get('unlock', [UnlockController::class, 'start'])->name('unlock');
     Route::get('unlock/success', [UnlockController::class, 'success'])->name('unlock.success');
 
@@ -56,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Also where signed-in users land from the landing page and after login:
     // resume wherever they left off.
     Route::get('dashboard', function (Request $request) {
-        $household = $request->user()->household;
+        $household = $request->user()->currentHousehold();
 
         if (! $household) {
             return redirect()->route('onboarding.bienvenue');

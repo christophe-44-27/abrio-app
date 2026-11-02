@@ -5,6 +5,7 @@ import { ArrowLeft, Download } from '@lucide/vue';
 import LimiteLogementsDialog from '@/components/LimiteLogementsDialog.vue';
 import BrandLink from '@/components/BrandLink.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
+import LocaleSwitch from '@/components/LocaleSwitch.vue';
 import StepNav from '@/components/StepNav.vue';
 import { useI18n } from '@/composables/useI18n';
 import {
@@ -20,6 +21,8 @@ const props = defineProps<{
     housings: Housing[];
     unlocked: boolean;
     justUnlocked?: boolean;
+    /** Public read-only view, reached through the owner's secret link. */
+    shared?: boolean;
 }>();
 
 const { t, locale } = useI18n();
@@ -56,7 +59,9 @@ defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
-    <Head :title="t.verdicts.metaTitle" />
+    <Head :title="t.verdicts.metaTitle">
+        <meta v-if="shared" name="robots" content="noindex, nofollow" />
+    </Head>
     <div class="mx-auto flex max-w-[1120px] flex-col gap-8">
         <p
             v-if="justUnlocked"
@@ -67,9 +72,10 @@ defineOptions({ inheritAttrs: false });
         </p>
         <div class="flex items-center justify-between gap-4 print:hidden">
             <BrandLink />
-            <HeaderTools />
+            <HeaderTools v-if="!shared" />
+            <LocaleSwitch v-else />
         </div>
-        <StepNav :current="2" />
+        <StepNav v-if="!shared" :current="2" />
 
         <div class="flex flex-wrap items-end justify-between gap-4">
             <div class="flex flex-col gap-2">
@@ -217,6 +223,7 @@ defineOptions({ inheritAttrs: false });
             class="flex flex-wrap items-center justify-between gap-4 print:hidden"
         >
             <Link
+                v-if="!shared"
                 href="/logements"
                 class="flex h-12 items-center gap-2 px-2 text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08]"
             >

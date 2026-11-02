@@ -19,6 +19,8 @@ defineOptions({ layout: BlankLayout, inheritAttrs: false });
 
 const props = defineProps<{
     passwordRules: string;
+    /** Set when the visitor followed a team invitation link. */
+    invitation: { email: string; inviter: string } | null;
     geo: {
         countries: string[];
         defaultCountry: string;
@@ -57,8 +59,19 @@ const selectClass = `${authInput} w-full border bg-white`;
     <Head :title="t.auth.register.metaTitle" />
 
     <AuthCard
-        :title="t.auth.register.title"
-        :description="t.auth.register.description"
+        :title="
+            invitation
+                ? t.auth.register.invitedTitle.replace(
+                      '{inviter}',
+                      invitation.inviter,
+                  )
+                : t.auth.register.title
+        "
+        :description="
+            invitation
+                ? t.auth.register.invitedDescription
+                : t.auth.register.description
+        "
     >
         <Form
             v-bind="store.form()"
@@ -95,6 +108,8 @@ const selectClass = `${authInput} w-full border bg-white`;
                         :tabindex="2"
                         autocomplete="email"
                         name="email"
+                        :default-value="invitation?.email"
+                        :readonly="!!invitation"
                         :class="authInput"
                     />
                     <InputError :message="errors.email" />

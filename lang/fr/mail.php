@@ -20,6 +20,15 @@ return [
         'action' => 'Changer mon mot de passe',
     ],
 
+    'invitation' => [
+        'hello' => 'Bonjour,',
+        'subject' => ':inviter t’invite sur Abrio',
+        'intro' => ':inviter t’invite sur Abrio pour comparer des logements avec toi.',
+        'details' => 'Crée ton compte en une minute : vous verrez et modifierez ensuite le même budget.',
+        'action' => 'Accepter l’invitation',
+        'expires' => 'Ce lien expire dans :days jours. Tu ne connais pas :inviter? Ignore ce courriel.',
+    ],
+
     'contact' => [
         'subject' => 'Contact Abrio : :name',
         'from' => '**De :** :name (:email)',

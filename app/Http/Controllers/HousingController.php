@@ -12,7 +12,7 @@ class HousingController extends Controller
 {
     public function edit(Request $request): Response|RedirectResponse
     {
-        $household = $request->user()->household;
+        $household = $request->user()->currentHousehold();
 
         if (! $household) {
             return redirect()->route('onboarding.menage');
@@ -21,15 +21,16 @@ class HousingController extends Controller
         return Inertia::render('household/Housings', [
             'household' => $household->only(['members', 'common_expenses', 'personal_expenses']),
             'housings' => $household->housings ?? [],
+            'revision' => $household->revision,
             'limit' => $request->user()->housingLimit(),
         ]);
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $household = $request->user()->household;
+        $household = $request->user()->currentHousehold();
 
-        abort_unless($household, 404);
+        abort_if($household === null, 404);
 
         $limit = $request->user()->housingLimit();
         $money = ['required', 'numeric', 'min:0', 'max:10000000'];
@@ -43,10 +44,11 @@ class HousingController extends Controller
             'housings.*.heating' => ['required', Rule::in(['included', 'paid'])],
             'housings.*.heating_amount' => $money,
             'housings.*.one_time' => $money,
+            'revision' => ['nullable', 'integer'],
         ]);
 
-        $household->update([
-            'housings' => collect($data['housings'])->map(fn (array $h) => [
+        $saved = $household->saveEdit([
+            'housings' => array_values(array_map(fn (array $h) => [
                 'id' => $h['id'],
                 'name' => $h['name'],
                 'rent' => (float) $h['rent'],
@@ -54,8 +56,12 @@ class HousingController extends Controller
                 'heating' => $h['heating'],
                 'heating_amount' => $h['heating'] === 'paid' ? (float) $h['heating_amount'] : 0.0,
                 'one_time' => (float) $h['one_time'],
-            ])->values()->all(),
-        ]);
+            ], $data['housings'])),
+        ], $data['revision'] ?? null);
+
+        if (! $saved) {
+            return back()->withErrors(['conflict' => __('team.conflict')]);
+        }
 
         // Background saves ("continue" absent) stay on the page.
         return $request->boolean('continue')
@@ -65,7 +71,7 @@ class HousingController extends Controller
 
     public function verdicts(Request $request): Response|RedirectResponse
     {
-        $household = $request->user()->household;
+        $household = $request->user()->currentHousehold();
 
         if (! $household) {
             return redirect()->route('onboarding.menage');

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
+use App\Http\Controllers\InvitationController;
+use App\Models\HouseholdInvitation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -67,7 +69,11 @@ class FortifyServiceProvider extends ServiceProvider
             'status' => $request->session()->get('status'),
         ]));
 
-        Fortify::registerView(fn () => Inertia::render('auth/Register', [
+        Fortify::registerView(fn (Request $request) => Inertia::render('auth/Register', [
+            'invitation' => ($invitation = $this->pendingInvitation($request)) ? [
+                'email' => $invitation->email,
+                'inviter' => $invitation->inviter->name,
+            ] : null,
             'passwordRules' => Password::defaults()->toPasswordRulesString(),
             'geo' => [
                 'countries' => config('geo.countries'),
@@ -79,6 +85,16 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::twoFactorChallengeView(fn () => Inertia::render('auth/TwoFactorChallenge'));
 
         Fortify::confirmPasswordView(fn () => Inertia::render('auth/ConfirmPassword'));
+    }
+
+    /**
+     * The invitation whose link the visitor just followed, if still valid.
+     */
+    private function pendingInvitation(Request $request): ?HouseholdInvitation
+    {
+        $token = $request->session()->get(InvitationController::SESSION_KEY);
+
+        return $token ? HouseholdInvitation::findValid($token) : null;
     }
 
     /**

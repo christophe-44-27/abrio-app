@@ -3,6 +3,7 @@
 use App\Http\Controllers\Settings\PremiumController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
+use App\Http\Controllers\Settings\TeamController;
 use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('settings/premium', [PremiumController::class, 'edit'])->name('premium.edit');
     Route::get('settings/premium/invoice', [PremiumController::class, 'invoice'])->name('premium.invoice');
+
+    Route::get('settings/team', [TeamController::class, 'edit'])->name('team.edit');
+    Route::post('settings/team/invitations', [TeamController::class, 'invite'])
+        ->middleware('throttle:10,1')
+        ->name('team.invite');
+    Route::delete('settings/team/invitations/{invitation}', [TeamController::class, 'cancelInvitation'])->name('team.invitation.cancel');
+    Route::delete('settings/team/members/{member}', [TeamController::class, 'removeMember'])->name('team.member.remove');
+    Route::post('settings/team/leave', [TeamController::class, 'leave'])->name('team.leave');
+    Route::post('settings/team/share', [TeamController::class, 'startSharing'])->name('team.share.start');
+    Route::delete('settings/team/share', [TeamController::class, 'stopSharing'])->name('team.share.stop');
 
     Route::get('settings/security', [SecurityController::class, 'edit'])
         ->middleware(RequirePassword::class)

@@ -13,6 +13,7 @@ const props = defineProps<{
     unlockedAt: string | null;
     hasInvoice: boolean;
     housingLimit: number | null;
+    isMember: boolean;
 }>();
 
 const { t, locale } = useI18n();
@@ -70,8 +71,12 @@ const since = computed(() =>
                 </li>
             </ul>
 
+            <p v-if="unlocked && isMember" class="text-sm text-[#6B5647]">
+                {{ t.settings.premium.viaTeam }}
+            </p>
+
             <p
-                v-if="unlocked"
+                v-else-if="unlocked"
                 class="text-sm font-semibold text-[#2F6B3F]"
                 role="status"
             >
