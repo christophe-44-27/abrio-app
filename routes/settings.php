@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\PremiumController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
 use Illuminate\Auth\Middleware\RequirePassword;
@@ -14,6 +15,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('settings/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('settings/premium', [PremiumController::class, 'edit'])->name('premium.edit');
+    Route::get('settings/premium/invoice', [PremiumController::class, 'invoice'])->name('premium.invoice');
 
     Route::get('settings/security', [SecurityController::class, 'edit'])
         ->middleware(RequirePassword::class)

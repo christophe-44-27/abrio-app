@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Models\User;
+use App\Support\UnlockCheckout;
 use Laravel\Cashier\Events\WebhookReceived;
 
 class UnlockAccountOnPayment
@@ -30,17 +31,16 @@ class UnlockAccountOnPayment
             return;
         }
 
-        // Ignore payments made through any other link of the Stripe account.
-        $expectedLink = config('billing.unlock.payment_link_id');
-
-        if ($expectedLink && ($session['payment_link'] ?? null) !== $expectedLink) {
+        // Only sessions the app created for this purchase count: the marker is
+        // set server-side, so other products of the Stripe account never unlock.
+        if (($session['metadata']['purchase'] ?? null) !== UnlockCheckout::PURCHASE) {
             return;
         }
 
         $userId = $session['client_reference_id'] ?? null;
 
         if ($userId && $user = User::find($userId)) {
-            $user->markUnlocked();
+            $user->markUnlocked($session['id'] ?? null);
         }
     }
 }

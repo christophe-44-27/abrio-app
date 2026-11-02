@@ -10,8 +10,15 @@ const { t, locale } = useI18n();
     <Link
         :href="landingPath(locale)"
         :aria-label="t.nav.home"
-        class="text-xl font-extrabold tracking-tight"
+        class="flex items-center gap-2.5 text-xl font-extrabold tracking-tight"
     >
+        <img
+            src="/assets/images/logo.webp"
+            alt=""
+            width="36"
+            height="36"
+            class="size-9 rounded-[22%]"
+        />
         Abrio
     </Link>
 </template>

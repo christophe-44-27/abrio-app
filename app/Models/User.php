@@ -58,10 +58,13 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     /**
      * Lift the free housing limit (one-time purchase). Idempotent.
      */
-    public function markUnlocked(): void
+    public function markUnlocked(?string $checkoutSessionId = null): void
     {
         if (! $this->isUnlocked()) {
-            $this->forceFill(['unlocked_at' => now()])->save();
+            $this->forceFill([
+                'unlocked_at' => now(),
+                'unlock_checkout_session_id' => $checkoutSessionId,
+            ])->save();
         }
     }
 

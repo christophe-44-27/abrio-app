@@ -4,6 +4,7 @@ import BrandLink from '@/components/BrandLink.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import { useI18n } from '@/composables/useI18n';
+import { edit as editPremium } from '@/routes/premium';
 import { edit as editProfile } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
 
@@ -14,6 +15,7 @@ const { isCurrentOrParentUrl } = useCurrentUrl();
 
 const items = [
     { key: 'profile', href: editProfile() },
+    { key: 'premium', href: editPremium() },
     { key: 'security', href: editSecurity() },
 ] as const;
 </script>

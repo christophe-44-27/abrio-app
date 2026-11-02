@@ -21,8 +21,8 @@ const fr = {
         cta: 'Commencer gratuitement',
         secondary: 'Voir comment ça marche',
         note: "Gratuit jusqu'à 3 logements.",
-        goBadge: "Let's GO",
-        noBadge: 'Oublie ça',
+        goBadge: 'Abordable',
+        noBadge: 'Hors budget',
         shareOfIncome: '{percent} de votre revenu',
         limit: 'Limite : 30 %',
         examples: {
@@ -119,7 +119,6 @@ const fr = {
     founder: {
         label: 'Fondateur',
         name: 'Christophe',
-        initial: 'C',
         paragraphs: [
             "Développeur web depuis plus de 10 ans, installé à Québec depuis 2017. J'ai créé Abrio pour que choisir un logement à plusieurs repose sur des chiffres clairs.",
             "J'avais un fichier Excel qui me permettait de faire ces calculs. J'ai voulu le mettre en ligne pour que ce soit plus facile.",
@@ -165,6 +164,8 @@ const fr = {
         email: 'Courriel',
         message: 'Message',
         send: 'Envoyer',
+        sending: 'Envoi…',
+        sent: 'Message envoyé. Merci! On te répond bientôt.',
     },
     onboarding: {
         welcome: {
@@ -199,7 +200,7 @@ const fr = {
             back: '← Retour',
             cta: 'Continuer',
             note: "Tu entreras les revenus et les charges à l'étape suivante.",
-            defaults: ['Toi', 'Conjoint(e)'],
+            defaults: ['Toi', 'Partenaire'],
         },
     },
     household: {
@@ -275,15 +276,15 @@ const fr = {
     verdicts: {
         metaTitle: 'Tes verdicts',
         title: 'Tes verdicts',
-        text: '{count} logements classés selon la part de votre revenu net qu’ils prennent. Au-delà de 30 %, c’est trop.',
+        text: '{count} logements classés selon la part de ton revenu net qu’ils prennent. Au-delà de 30 %, c’est trop.',
         textOne:
-            '1 logement classé selon la part de votre revenu net qu’il prend. Au-delà de 30 %, c’est trop.',
+            '1 logement classé selon la part de ton revenu net qu’il prend. Au-delà de 30 %, c’est trop.',
         limitLegend: 'Limite de 30 %',
         monthlyLine: 'Logement : {amount} par mois',
-        go: "Let's GO",
-        no: 'Oublie ça',
+        go: 'Abordable',
+        no: 'Hors budget',
         best: 'Meilleur choix',
-        ofIncome: 'de votre revenu',
+        ofIncome: 'de ton revenu',
         partLine: 'Part : {part} ({pct} du revenu) → reste {left}',
         underLimit: '{amount} sous la limite',
         overLimit: '{amount} au-dessus de la limite',
@@ -331,8 +332,24 @@ const fr = {
     settings: {
         title: 'Paramètres du compte',
         subtitle: 'Gère tes informations et la sécurité de ton compte.',
-        nav: { label: 'Paramètres', profile: 'Profil', security: 'Sécurité' },
+        nav: {
+            label: 'Paramètres',
+            profile: 'Profil',
+            premium: 'Premium',
+            security: 'Sécurité',
+        },
         cancel: 'Annuler',
+        premium: {
+            metaTitle: 'Premium',
+            title: 'Abrio Premium',
+            description:
+                'Passe à la version illimitée sans attendre d’atteindre la limite de 3 logements.',
+            descriptionUnlocked: 'Ta version illimitée est active.',
+            active: 'Premium actif',
+            since: 'depuis le {date}.',
+            free: 'Version gratuite : jusqu’à {n} logements.',
+            invoice: 'Voir ma facture',
+        },
         profile: {
             metaTitle: 'Profil',
             title: 'Profil',

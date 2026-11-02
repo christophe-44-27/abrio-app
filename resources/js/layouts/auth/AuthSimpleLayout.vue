@@ -29,8 +29,15 @@ defineOptions({ inheritAttrs: false });
             <div class="flex items-center justify-between">
                 <Link
                     :href="landingPath(locale)"
-                    class="text-xl font-extrabold tracking-tight"
+                    class="flex items-center gap-2.5 text-xl font-extrabold tracking-tight"
                 >
+                    <img
+                        src="/assets/images/logo.webp"
+                        alt=""
+                        width="36"
+                        height="36"
+                        class="size-9 rounded-[22%]"
+                    />
                     Abrio
                 </Link>
                 <LocaleSwitch />

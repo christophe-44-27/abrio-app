@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link, usePage } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { landingPath, messages } from '@/i18n';
 import type { Locale } from '@/i18n';
@@ -16,6 +16,18 @@ const otherLocale = computed<Locale>(() =>
 // Signed-in visitors would be bounced off /register, so send them to the app.
 const signedIn = computed(() => Boolean(usePage().props.auth?.user));
 const startHref = computed(() => (signedIn.value ? '/dashboard' : '/register'));
+
+const contactForm = useForm({
+    name: '',
+    email: '',
+    message: '',
+    website: '',
+});
+const sendContact = () =>
+    contactForm.post('/contact', {
+        preserveScroll: true,
+        onSuccess: () => contactForm.reset(),
+    });
 
 const featureIcons = [
     'M9 8a3 3 0 1 0 0 .01M17 9a2.5 2.5 0 1 0 0 .01M3 19c0-3 3-5 6-5s6 2 6 5M15 19c0-2 2-4 5-4',
@@ -41,6 +53,11 @@ defineOptions({ inheritAttrs: false });
             :content="t.meta.description"
         />
         <meta head-key="og:type" property="og:type" content="website" />
+        <meta
+            head-key="og:image"
+            property="og:image"
+            :content="`${urls.fr.replace(/\/$/, '')}/assets/images/logo.webp`"
+        />
         <meta
             head-key="og:locale"
             property="og:locale"
@@ -73,8 +90,15 @@ defineOptions({ inheritAttrs: false });
             >
                 <Link
                     :href="landingPath(locale)"
-                    class="text-[22px] font-extrabold tracking-tight"
+                    class="flex items-center gap-2.5 text-[22px] font-extrabold tracking-tight"
                 >
+                    <img
+                        src="/assets/images/logo.webp"
+                        alt=""
+                        width="40"
+                        height="40"
+                        class="size-10 rounded-[22%]"
+                    />
                     Abrio
                 </Link>
                 <nav
@@ -449,12 +473,14 @@ defineOptions({ inheritAttrs: false });
                 <div
                     class="mx-auto flex max-w-[1120px] flex-wrap items-center gap-12"
                 >
-                    <div
-                        class="flex size-40 flex-none items-center justify-center rounded-full bg-[#F5A25D] text-6xl font-extrabold"
-                        aria-hidden="true"
-                    >
-                        {{ t.founder.initial }}
-                    </div>
+                    <img
+                        src="/assets/images/christophe.jpg"
+                        :alt="t.founder.name"
+                        width="160"
+                        height="160"
+                        loading="lazy"
+                        class="size-40 flex-none rounded-full bg-[#F5A25D] object-cover"
+                    />
                     <div class="flex flex-[1_1_420px] flex-col gap-3.5">
                         <span
                             class="text-sm font-extrabold tracking-[0.04em] text-[#B4540F] uppercase"
@@ -531,8 +557,17 @@ defineOptions({ inheritAttrs: false });
                     </div>
                     <form
                         class="flex flex-[1_1_420px] flex-col gap-4"
-                        @submit.prevent
+                        @submit.prevent="sendContact"
                     >
+                        <input
+                            v-model="contactForm.website"
+                            type="text"
+                            name="website"
+                            tabindex="-1"
+                            autocomplete="off"
+                            aria-hidden="true"
+                            class="hidden"
+                        />
                         <div class="flex flex-col gap-1.5">
                             <label
                                 for="c-name"
@@ -542,10 +577,18 @@ defineOptions({ inheritAttrs: false });
                             <input
                                 id="c-name"
                                 type="text"
+                                v-model="contactForm.name"
                                 name="name"
                                 autocomplete="name"
+                                required
                                 class="h-12 rounded-[10px] border border-[#B59A80] bg-white px-4 text-base"
                             />
+                            <p
+                                v-if="contactForm.errors.name"
+                                class="text-sm text-[#8F1B13]"
+                            >
+                                {{ contactForm.errors.name }}
+                            </p>
                         </div>
                         <div class="flex flex-col gap-1.5">
                             <label
@@ -556,10 +599,18 @@ defineOptions({ inheritAttrs: false });
                             <input
                                 id="c-email"
                                 type="email"
+                                v-model="contactForm.email"
                                 name="email"
                                 autocomplete="email"
+                                required
                                 class="h-12 rounded-[10px] border border-[#B59A80] bg-white px-4 text-base"
                             />
+                            <p
+                                v-if="contactForm.errors.email"
+                                class="text-sm text-[#8F1B13]"
+                            >
+                                {{ contactForm.errors.email }}
+                            </p>
                         </div>
                         <div class="flex flex-col gap-1.5">
                             <label
@@ -569,18 +620,38 @@ defineOptions({ inheritAttrs: false });
                             >
                             <textarea
                                 id="c-message"
+                                v-model="contactForm.message"
                                 name="message"
                                 rows="5"
+                                required
                                 class="resize-y rounded-[10px] border border-[#B59A80] bg-white px-4 py-3 text-base"
                             />
+                            <p
+                                v-if="contactForm.errors.message"
+                                class="text-sm text-[#8F1B13]"
+                            >
+                                {{ contactForm.errors.message }}
+                            </p>
                         </div>
-                        <div>
+                        <div class="flex flex-wrap items-center gap-4">
                             <button
                                 type="submit"
-                                class="h-[52px] cursor-pointer rounded-[14px] bg-[#2B1D14] px-8 text-base font-extrabold text-white hover:bg-[#43302A]"
+                                :disabled="contactForm.processing"
+                                class="h-[52px] cursor-pointer rounded-[14px] bg-[#2B1D14] px-8 text-base font-extrabold text-white hover:bg-[#43302A] disabled:cursor-wait disabled:opacity-60"
                             >
-                                {{ t.contact.send }}
+                                {{
+                                    contactForm.processing
+                                        ? t.contact.sending
+                                        : t.contact.send
+                                }}
                             </button>
+                            <p
+                                v-if="contactForm.recentlySuccessful"
+                                role="status"
+                                class="text-[15px] font-semibold text-[#0B5D3B]"
+                            >
+                                {{ t.contact.sent }}
+                            </p>
                         </div>
                     </form>
                 </div>
@@ -592,7 +663,18 @@ defineOptions({ inheritAttrs: false });
                 class="mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-4 text-sm"
             >
                 <div class="flex flex-wrap items-center gap-4">
-                    <span class="text-xl font-extrabold text-white">Abrio</span>
+                    <span
+                        class="flex items-center gap-2.5 text-xl font-extrabold text-white"
+                    >
+                        <img
+                            src="/assets/images/logo.webp"
+                            alt=""
+                            width="32"
+                            height="32"
+                            class="size-8 rounded-[22%]"
+                        />
+                        Abrio
+                    </span>
                     <span>© 2026</span>
                 </div>
                 <nav class="flex flex-wrap items-center gap-x-5 gap-y-1">

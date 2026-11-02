@@ -23,8 +23,8 @@ const en: Messages = {
         cta: 'Start for free',
         secondary: 'See how it works',
         note: 'Free for up to 3 places.',
-        goBadge: "Let's GO",
-        noBadge: 'Skip it',
+        goBadge: 'Affordable',
+        noBadge: 'Over budget',
         shareOfIncome: '{percent} of your income',
         limit: 'Limit: 30%',
         examples: {
@@ -121,7 +121,6 @@ const en: Messages = {
     founder: {
         label: 'Founder',
         name: 'Christophe',
-        initial: 'C',
         paragraphs: [
             'Web developer for over 10 years, based in Quebec City since 2017. I built Abrio so choosing a home together rests on clear numbers.',
             'I had an Excel file that let me do these calculations. I wanted to put it online to make it easier.',
@@ -167,6 +166,8 @@ const en: Messages = {
         email: 'Email',
         message: 'Message',
         send: 'Send',
+        sending: 'Sending…',
+        sent: "Message sent. Thank you! We'll get back to you soon.",
     },
     onboarding: {
         welcome: {
@@ -282,8 +283,8 @@ const en: Messages = {
             '1 place ranked by the share of your net income it takes. Above 30%, it’s too much.',
         limitLegend: '30% limit',
         monthlyLine: 'Housing: {amount} per month',
-        go: "Let's GO",
-        no: 'Skip it',
+        go: 'Affordable',
+        no: 'Over budget',
         best: 'Best choice',
         ofIncome: 'of your income',
         partLine: 'Share: {part} ({pct} of income) → {left} left',
@@ -333,8 +334,24 @@ const en: Messages = {
     settings: {
         title: 'Account settings',
         subtitle: 'Manage your details and your account security.',
-        nav: { label: 'Settings', profile: 'Profile', security: 'Security' },
+        nav: {
+            label: 'Settings',
+            profile: 'Profile',
+            premium: 'Premium',
+            security: 'Security',
+        },
         cancel: 'Cancel',
+        premium: {
+            metaTitle: 'Premium',
+            title: 'Abrio Premium',
+            description:
+                'Go unlimited now, without waiting to hit the 3-place limit.',
+            descriptionUnlocked: 'Your unlimited version is active.',
+            active: 'Premium active',
+            since: 'since {date}.',
+            free: 'Free version: up to {n} places.',
+            invoice: 'View my invoice',
+        },
         profile: {
             metaTitle: 'Profile',
             title: 'Profile',

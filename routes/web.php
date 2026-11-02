@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\EmailCodeController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\HousingController;
 use App\Http\Controllers\UnlockController;
@@ -20,6 +21,10 @@ foreach (['fr' => '/', 'en' => '/en'] as $locale => $uri) {
         ]);
     })->name($locale === 'fr' ? 'home' : 'home.en');
 }
+
+Route::post('contact', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact.store');
 
 // Language switch for pages that have no /en twin (auth, onboarding, app).
 Route::post('locale/{locale}', function (string $locale) {

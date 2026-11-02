@@ -4,13 +4,12 @@ import AuthLayout from '@/layouts/AuthLayout.vue';
 import OnboardingLayout from '@/layouts/OnboardingLayout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Abrio';
 
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
         switch (true) {
-            case name === 'Welcome':
             case name === 'Landing':
                 return null;
             case name.startsWith('onboarding/'):
