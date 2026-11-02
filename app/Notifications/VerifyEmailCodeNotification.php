@@ -28,22 +28,13 @@ class VerifyEmailCodeNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        $minutes = EmailVerificationCode::TTL_MINUTES;
-
-        if ($this->locale === 'en') {
-            return (new MailMessage)
-                ->subject("Your Abrio code: {$this->code}")
-                ->greeting("Hi {$notifiable->name},")
-                ->line('Use this code to verify your email address:')
-                ->line("**{$this->code}**")
-                ->line("It expires in {$minutes} minutes. If you didn't create an Abrio account, you can ignore this email.");
-        }
+        $locale = $this->locale ?? 'fr';
 
         return (new MailMessage)
-            ->subject("Ton code Abrio : {$this->code}")
-            ->greeting("Bonjour {$notifiable->name},")
-            ->line('Utilise ce code pour valider ton adresse courriel :')
+            ->subject(__('mail.verify_code.subject', ['code' => $this->code], $locale))
+            ->greeting(__('mail.greeting', ['name' => $notifiable->name], $locale))
+            ->line(__('mail.verify_code.intro', [], $locale))
             ->line("**{$this->code}**")
-            ->line("Il expire dans {$minutes} minutes. Si tu n'as pas créé de compte Abrio, ignore ce courriel.");
+            ->line(__('mail.verify_code.expires', ['minutes' => EmailVerificationCode::TTL_MINUTES], $locale));
     }
 }

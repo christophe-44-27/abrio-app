@@ -14,7 +14,10 @@ class ContactMessageNotification extends Notification
         public string $senderName,
         public string $senderEmail,
         public string $body,
-    ) {}
+    ) {
+        // The message goes to the team, who read French.
+        $this->locale('fr');
+    }
 
     /**
      * @return array<int, string>
@@ -27,9 +30,9 @@ class ContactMessageNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("Contact Abrio : {$this->senderName}")
+            ->subject(__('mail.contact.subject', ['name' => $this->senderName], 'fr'))
             ->replyTo($this->senderEmail, $this->senderName)
-            ->line("**De :** {$this->senderName} ({$this->senderEmail})")
+            ->line(__('mail.contact.from', ['name' => $this->senderName, 'email' => $this->senderEmail], 'fr'))
             ->line($this->body);
     }
 }

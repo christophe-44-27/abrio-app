@@ -2,6 +2,7 @@
 import type { VisitOptions } from '@inertiajs/core';
 import { Head, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import { Plus } from '@lucide/vue';
 import BrandLink from '@/components/BrandLink.vue';
 import InputError from '@/components/InputError.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
@@ -132,7 +133,7 @@ const field =
     'h-11 w-full rounded-[10px] border border-[#B59A80] bg-white px-3 text-[15px] text-[#2B1D14]';
 const card = 'rounded-2xl border border-[#E8DACB] bg-white p-7';
 const dashed =
-    'h-11 cursor-pointer rounded-[10px] border border-dashed border-[#B59A80] px-4 text-sm font-semibold text-[#B4540F]';
+    'flex h-11 cursor-pointer items-center gap-2 rounded-[10px] border border-dashed border-[#B59A80] px-4 text-sm font-semibold text-[#B4540F]';
 
 defineOptions({ inheritAttrs: false });
 </script>
@@ -249,6 +250,7 @@ defineOptions({ inheritAttrs: false });
                             :class="dashed"
                             @click="addMember"
                         >
+                            <Plus class="size-4" aria-hidden="true" />
                             {{ t.household.income.add }}
                         </button>
                     </div>
@@ -403,6 +405,7 @@ defineOptions({ inheritAttrs: false });
                                     :class="dashed"
                                     @click="addCommon"
                                 >
+                                    <Plus class="size-4" aria-hidden="true" />
                                     {{ t.household.common.add }}
                                 </button>
                             </div>
@@ -539,6 +542,7 @@ defineOptions({ inheritAttrs: false });
                                     :class="dashed"
                                     @click="addPersonal"
                                 >
+                                    <Plus class="size-4" aria-hidden="true" />
                                     {{ t.household.personal.add }}
                                 </button>
                             </div>

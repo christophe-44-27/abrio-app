@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ArrowRight, Check } from '@lucide/vue';
 import { computed } from 'vue';
 import { useI18n } from '@/composables/useI18n';
 import type { SaveStatus } from '@/composables/useManualSave';
@@ -62,20 +63,12 @@ const label = computed(() => {
                 role="status"
                 aria-live="polite"
             >
-                <svg
+                <Check
                     v-if="status === 'saved'"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
+                    class="size-4"
                     stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
                     aria-hidden="true"
-                >
-                    <path d="M5 12l5 5 9-10" />
-                </svg>
+                />
                 <span
                     v-else-if="status === 'saving'"
                     class="size-3.5 animate-spin rounded-full border-2 border-current border-t-transparent"
@@ -99,10 +92,11 @@ const label = computed(() => {
                 </button>
                 <button
                     type="submit"
-                    class="h-12 cursor-pointer rounded-xl bg-[#2B1D14] px-6 text-[15px] font-extrabold text-white hover:bg-[#43302A] disabled:cursor-not-allowed disabled:opacity-60"
+                    class="flex h-12 cursor-pointer items-center gap-2 rounded-xl bg-[#2B1D14] px-6 text-[15px] font-extrabold text-white hover:bg-[#43302A] disabled:cursor-not-allowed disabled:opacity-60"
                     :disabled="busy"
                 >
                     {{ continueLabel }}
+                    <ArrowRight class="size-4" aria-hidden="true" />
                 </button>
             </div>
         </div>

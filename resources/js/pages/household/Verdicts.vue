@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import { ArrowLeft, Download } from '@lucide/vue';
 import LimiteLogementsDialog from '@/components/LimiteLogementsDialog.vue';
 import BrandLink from '@/components/BrandLink.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
@@ -217,8 +218,9 @@ defineOptions({ inheritAttrs: false });
         >
             <Link
                 href="/logements"
-                class="flex h-12 items-center px-2 text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08]"
+                class="flex h-12 items-center gap-2 px-2 text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08]"
             >
+                <ArrowLeft class="size-4" aria-hidden="true" />
                 {{ t.verdicts.edit }}
             </Link>
             <button
@@ -226,19 +228,7 @@ defineOptions({ inheritAttrs: false });
                 class="flex h-[52px] cursor-pointer items-center gap-2 rounded-xl border-2 border-[#2B1D14] bg-white px-6 text-base font-extrabold"
                 @click="exportPdf"
             >
-                <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                >
-                    <path d="M12 4v11M7 11l5 5 5-5M5 20h14" />
-                </svg>
+                <Download class="size-[18px]" aria-hidden="true" />
                 {{ t.verdicts.exportPdf }}
             </button>
         </div>

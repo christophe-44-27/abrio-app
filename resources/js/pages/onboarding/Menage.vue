@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ArrowLeft, Plus } from '@lucide/vue';
 import InputError from '@/components/InputError.vue';
 import BrandLink from '@/components/BrandLink.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
@@ -44,8 +45,9 @@ defineOptions({ inheritAttrs: false });
             <div class="flex items-center gap-4">
                 <Link
                     href="/onboarding"
-                    class="flex h-11 items-center text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08]"
+                    class="flex h-11 items-center gap-2 text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08]"
                 >
+                    <ArrowLeft class="size-4" aria-hidden="true" />
                     {{ t.onboarding.people.back }}
                 </Link>
                 <HeaderTools />
@@ -103,9 +105,10 @@ defineOptions({ inheritAttrs: false });
             <div v-if="form.people.length < MAX_PEOPLE">
                 <button
                     type="button"
-                    class="h-11 cursor-pointer rounded-[10px] border border-dashed border-[#B59A80] px-4 text-sm font-semibold text-[#B4540F]"
+                    class="flex h-11 cursor-pointer items-center gap-2 rounded-[10px] border border-dashed border-[#B59A80] px-4 text-sm font-semibold text-[#B4540F]"
                     @click="addPerson"
                 >
+                    <Plus class="size-4" aria-hidden="true" />
                     {{ t.onboarding.people.add }}
                 </button>
             </div>

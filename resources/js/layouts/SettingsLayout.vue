@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import BrandLink from '@/components/BrandLink.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
+import { Toaster } from '@/components/ui/sonner';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import { useI18n } from '@/composables/useI18n';
 import { edit as editPremium } from '@/routes/premium';
@@ -28,6 +29,7 @@ const items = [
             rel="stylesheet"
         />
     </Head>
+    <Toaster position="top-center" />
     <div
         class="min-h-screen bg-[#FBF5EE] px-6 pt-8 pb-16 font-['Manrope',system-ui,sans-serif] text-[#2B1D14] md:px-10"
     >

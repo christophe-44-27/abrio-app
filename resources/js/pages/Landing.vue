@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { Minus, Plus } from '@lucide/vue';
 import { computed } from 'vue';
 import { landingPath, messages } from '@/i18n';
 import type { Locale } from '@/i18n';
@@ -521,16 +522,14 @@ defineOptions({ inheritAttrs: false });
                                 class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden"
                             >
                                 {{ item.q }}
-                                <span
-                                    class="text-2xl text-[#B4540F] group-open:hidden"
+                                <Plus
+                                    class="size-6 flex-none text-[#B4540F] group-open:hidden"
                                     aria-hidden="true"
-                                    >+</span
-                                >
-                                <span
-                                    class="hidden text-2xl text-[#B4540F] group-open:inline"
+                                />
+                                <Minus
+                                    class="hidden size-6 flex-none text-[#B4540F] group-open:block"
                                     aria-hidden="true"
-                                    >−</span
-                                >
+                                />
                             </summary>
                             <p
                                 class="mt-3 text-base leading-[1.6] text-[#6B5647]"

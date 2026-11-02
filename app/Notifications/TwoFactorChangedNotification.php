@@ -28,35 +28,17 @@ class TwoFactorChangedNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        $when = now()->locale($this->locale ?? 'fr')->isoFormat('LLLL');
+        $locale = $this->locale ?? 'fr';
+        $when = now()->locale($locale)->isoFormat('LLLL');
         $where = $this->ip ? " ({$this->ip})" : '';
-        $resetUrl = route('password.request');
-        $support = config('app.support_email');
-
-        if ($this->locale === 'en') {
-            $state = $this->enabled ? 'enabled' : 'disabled';
-
-            return (new MailMessage)
-                ->subject("Two-factor authentication was {$state} on your Abrio account")
-                ->greeting("Hi {$notifiable->name},")
-                ->line("Two-factor authentication was {$state} on your Abrio account on {$when}{$where}.")
-                ->line($this->enabled
-                    ? 'If it was you, there is nothing to do: your account is now better protected.'
-                    : 'If it was you, there is nothing to do. You can turn it back on anytime in your account settings.')
-                ->line("If it wasn't you, someone else may have access to your account. Change your password right away, then contact us at {$support} so we can help.")
-                ->action('Change my password', $resetUrl);
-        }
-
-        $state = $this->enabled ? 'activée' : 'désactivée';
+        $state = __('mail.two_factor.'.($this->enabled ? 'enabled' : 'disabled'), [], $locale);
 
         return (new MailMessage)
-            ->subject("La double authentification a été {$state} sur ton compte Abrio")
-            ->greeting("Bonjour {$notifiable->name},")
-            ->line("La double authentification a été {$state} sur ton compte Abrio le {$when}{$where}.")
-            ->line($this->enabled
-                ? 'Si c’est toi, tu n’as rien à faire : ton compte est simplement mieux protégé.'
-                : 'Si c’est toi, tu n’as rien à faire. Tu peux la réactiver quand tu veux dans les paramètres du compte.')
-            ->line("Si ce n’est pas toi, quelqu’un d’autre a peut-être accès à ton compte. Change ton mot de passe tout de suite, puis écris-nous à {$support} pour qu’on t’aide.")
-            ->action('Changer mon mot de passe', $resetUrl);
+            ->subject(__('mail.two_factor.subject', ['state' => $state], $locale))
+            ->greeting(__('mail.greeting', ['name' => $notifiable->name], $locale))
+            ->line(__('mail.two_factor.intro', ['state' => $state, 'when' => $when, 'where' => $where], $locale))
+            ->line(__('mail.two_factor.'.($this->enabled ? 'if_you_enabled' : 'if_you_disabled'), [], $locale))
+            ->line(__('mail.two_factor.if_not_you', ['support' => config('app.support_email')], $locale))
+            ->action(__('mail.two_factor.action', [], $locale), route('password.request'));
     }
 }

@@ -2,7 +2,7 @@ const fr = {
     meta: {
         title: 'Compare tes logements selon le budget du ménage',
         description:
-            "Abrio compare vos logements selon le budget de votre ménage. Chacun voit sa part du loyer et ce qu'il lui reste.",
+            "Abrio compare tes logements selon le budget de ton ménage. Chacun voit sa part du loyer et ce qu'il lui reste.",
     },
     nav: {
         how: 'Fonctionnement',
@@ -16,14 +16,14 @@ const fr = {
         app: 'Mon espace',
     },
     hero: {
-        title: "Vois ce qu'il vous reste à la fin du mois.",
-        text: "Abrio compare vos logements selon le budget de votre ménage. Chacun voit sa part du loyer et ce qu'il lui reste, et chaque logement reçoit un verdict clair.",
+        title: "Vois ce qu'il te reste à la fin du mois.",
+        text: "Abrio compare tes logements selon le budget de ton ménage. Chacun voit sa part du loyer et ce qu'il lui reste, et chaque logement reçoit un verdict clair.",
         cta: 'Commencer gratuitement',
         secondary: 'Voir comment ça marche',
         note: "Gratuit jusqu'à 3 logements.",
         goBadge: 'Abordable',
         noBadge: 'Hors budget',
-        shareOfIncome: '{percent} de votre revenu',
+        shareOfIncome: '{percent} de ton revenu',
         limit: 'Limite : 30 %',
         examples: {
             good: { name: '3½ Sainte-Foy', percent: '13,3 %' },
@@ -32,23 +32,23 @@ const fr = {
     },
     features: {
         title: 'Ce que fait Abrio',
-        text: 'Un outil pour savoir si un logement est dans vos moyens, avant de signer le bail.',
+        text: 'Un outil pour savoir si un logement est dans tes moyens, avant de signer le bail.',
         items: [
             {
                 title: 'Un budget pour tout le ménage',
-                text: 'Les revenus et les charges de chaque personne, en couple, en colocation ou en famille. Vous ajoutez autant de membres que nécessaire.',
+                text: 'Les revenus et les charges de chaque personne, en couple, en colocation ou en famille. Tu ajoutes autant de membres que nécessaire.',
             },
             {
                 title: 'Le coût réel de chaque logement',
-                text: "Le loyer, le chauffage et l'électricité, le stationnement. Tout ce que l'annonce ne dit pas, additionné à votre place.",
+                text: "Le loyer, le chauffage et l'électricité, le stationnement. Tout ce que l'annonce ne dit pas, additionné à ta place.",
             },
             {
                 title: 'Un verdict clair',
-                text: "Au-delà de 30 % de votre revenu net, c'est trop. Chaque logement est classé, avec la part de chacun et ce qu'il lui reste.",
+                text: "Au-delà de 30 % de ton revenu net, c'est trop. Chaque logement est classé, avec la part de chacun et ce qu'il lui reste.",
             },
             {
                 title: 'Un résultat à garder',
-                text: 'Exportez vos verdicts en PDF pour en discuter à deux, ou pour les garder sous la main pendant les visites.',
+                text: 'Exporte tes verdicts en PDF pour en discuter à deux, ou pour les garder sous la main pendant les visites.',
             },
         ],
     },
@@ -56,21 +56,21 @@ const fr = {
         title: 'Comment ça marche',
         steps: [
             {
-                title: 'Entrez votre ménage',
+                title: 'Entre ton ménage',
                 text: 'Les revenus nets de chaque personne, puis les charges communes et les charges perso. Abrio calcule la part de chacun.',
             },
             {
-                title: 'Ajoutez vos logements',
-                text: "Le loyer, le chauffage et l'électricité, le stationnement et les frais ponctuels. Ce que vous voyez dans l'annonce et à la visite.",
+                title: 'Ajoute tes logements',
+                text: "Le loyer, le chauffage et l'électricité, le stationnement et les frais ponctuels. Ce que tu vois dans l'annonce et à la visite.",
             },
             {
-                title: 'Lisez le verdict',
-                text: "Chaque logement passe ou ne passe pas. Vous voyez la part de chacun et ce qu'il vous reste à la fin du mois.",
+                title: 'Lis le verdict',
+                text: "Chaque logement passe ou ne passe pas. Tu vois la part de chacun et ce qu'il te reste à la fin du mois.",
             },
         ],
     },
     guide: {
-        title: 'Quel loyer pouvez-vous vous payer en couple ou en colocation?',
+        title: 'Quel loyer peux-tu te payer en couple ou en colocation?',
         text: "Ce qu'il faut savoir avant de comparer des logements.",
         items: [
             {
@@ -79,21 +79,21 @@ const fr = {
             },
             {
                 title: 'Comparer le coût réel, pas seulement le loyer',
-                text: "Deux logements au même loyer ne coûtent pas la même chose. Le chauffage et l'électricité, le stationnement et les frais ponctuels peuvent changer le montant qui sort de votre compte chaque mois. Abrio additionne tout pour comparer vos logements à armes égales.",
+                text: "Deux logements au même loyer ne coûtent pas la même chose. Le chauffage et l'électricité, le stationnement et les frais ponctuels peuvent changer le montant qui sort de ton compte chaque mois. Abrio additionne tout pour comparer tes logements à armes égales.",
             },
             {
                 title: 'Partager le loyer selon le revenu de chacun',
-                text: "Quand les revenus sont différents, couper le loyer en deux n'est pas toujours juste. Abrio répartit les charges communes au prorata du revenu net de chaque personne, comme dans un chiffrier de couple, sans que vous ayez à le monter à la main.",
+                text: "Quand les revenus sont différents, couper le loyer en deux n'est pas toujours juste. Abrio répartit les charges communes au prorata du revenu net de chaque personne, comme dans un chiffrier de couple, sans que tu aies à le monter à la main.",
             },
             {
                 title: 'Le revenu net, pas le brut',
-                text: 'Plusieurs calculateurs appliquent les 30 % au revenu brut. Abrio part de ce qui entre réellement dans votre compte, ce qui rend le verdict plus prudent et plus proche de votre vie de tous les jours.',
+                text: 'Plusieurs calculateurs appliquent les 30 % au revenu brut. Abrio part de ce qui entre réellement dans ton compte, ce qui rend le verdict plus prudent et plus proche de ta vie de tous les jours.',
             },
         ],
     },
     pricing: {
         title: 'Gratuit pour commencer, 9,99 $ une seule fois',
-        text: "Pas d'abonnement. Vous payez une fois, et c'est pour toujours.",
+        text: "Pas d'abonnement. Tu paies une fois, et c'est pour toujours.",
         free: {
             name: 'Gratuit',
             price: '0 $',
@@ -129,11 +129,11 @@ const fr = {
         items: [
             {
                 q: "Qu'est-ce qu'Abrio, exactement?",
-                a: "Un outil qui compare plusieurs logements selon le budget de votre ménage. Il calcule la part de chacun, le coût réel du logement et ce qu'il vous reste à la fin du mois, puis donne un verdict.",
+                a: "Un outil qui compare plusieurs logements selon le budget de ton ménage. Il calcule la part de chacun, le coût réel du logement et ce qu'il te reste à la fin du mois, puis donne un verdict.",
             },
             {
                 q: 'Pourquoi 30 % du revenu net?',
-                a: "C'est la règle la plus courante pour un budget logement. Abrio l'applique à votre revenu net, soit ce qui entre dans votre compte, ce qui est plus prudent qu'un calcul sur le brut.",
+                a: "C'est la règle la plus courante pour un budget logement. Abrio l'applique à ton revenu net, soit ce qui entre dans ton compte, ce qui est plus prudent qu'un calcul sur le brut.",
             },
             {
                 q: 'Comment les charges sont-elles réparties?',
@@ -141,19 +141,19 @@ const fr = {
             },
             {
                 q: 'Combien de logements puis-je comparer gratuitement?',
-                a: 'Trois. Pour en comparer davantage, vous débloquez Abrio une seule fois pour 9,99 $.',
+                a: 'Trois. Pour en comparer davantage, tu débloques Abrio une seule fois pour 9,99 $.',
             },
             {
                 q: 'Le paiement de 9,99 $ est-il vraiment unique?',
-                a: "Oui. Il n'y a ni abonnement ni renouvellement. Vous payez une fois et vous gardez l'accès illimité.",
+                a: "Oui. Il n'y a ni abonnement ni renouvellement. Tu paies une fois et tu gardes l'accès illimité.",
             },
             {
                 q: "Puis-je l'utiliser seul(e) ou à plus de deux?",
-                a: 'Oui. Vous pouvez ajouter autant de personnes que nécessaire : couple, colocation ou famille.',
+                a: 'Oui. Tu peux ajouter autant de personnes que nécessaire : couple, colocation ou famille.',
             },
             {
                 q: 'Abrio remplace-t-il un conseil financier?',
-                a: "Non. Abrio est un outil d'estimation. Les verdicts reposent sur les montants que vous entrez et sur la règle des 30 %.",
+                a: "Non. Abrio est un outil d'estimation. Les verdicts reposent sur les montants que tu entres et sur la règle des 30 %.",
             },
         ],
     },
@@ -170,7 +170,7 @@ const fr = {
     onboarding: {
         welcome: {
             metaTitle: 'Bienvenue',
-            title: "Vois ce qu'il vous reste à la fin du mois.",
+            title: "Vois ce qu'il te reste à la fin du mois.",
             text: "Entre les revenus et les charges de ton ménage, ajoute les logements que tu visites, et Abrio te montre ce qu'il reste à chacun.",
             steps: [
                 {
@@ -183,7 +183,7 @@ const fr = {
                 },
                 {
                     title: 'Le verdict',
-                    text: "Chaque logement est classé, avec la part de chacun et ce qu'il vous reste.",
+                    text: "Chaque logement est classé, avec la part de chacun et ce qu'il te reste.",
                 },
             ],
             cta: 'Commencer',
@@ -196,8 +196,8 @@ const fr = {
             label: 'Personne {n}',
             remove: 'Retirer',
             removeLabel: 'Retirer la personne {n}',
-            add: '+ Ajouter une personne',
-            back: '← Retour',
+            add: 'Ajouter une personne',
+            back: 'Retour',
             cta: 'Continuer',
             note: "Tu entreras les revenus et les charges à l'étape suivante.",
             defaults: ['Toi', 'Partenaire'],
@@ -215,7 +215,7 @@ const fr = {
             share: 'Part du ménage',
             remove: 'Retirer',
             removeLabel: 'Retirer {name}',
-            add: '+ Ajouter un membre du ménage',
+            add: 'Ajouter un membre du ménage',
         },
         common: {
             title: 'Charges communes',
@@ -226,7 +226,7 @@ const fr = {
             amountLabel: 'Montant total, {name}',
             deleteLabel: 'Supprimer {name}',
             subtotal: 'Sous-total communes',
-            add: '+ Ajouter une charge commune',
+            add: 'Ajouter une charge commune',
             empty: 'Aucune charge commune pour le moment.',
         },
         personal: {
@@ -235,7 +235,7 @@ const fr = {
             charge: 'Charge',
             amountLabel: '{name}, {person}',
             subtotal: 'Sous-total perso',
-            add: '+ Ajouter une charge perso',
+            add: 'Ajouter une charge perso',
             empty: 'Aucune charge perso pour le moment.',
         },
         totalOutside: 'Total hors logement',
@@ -245,7 +245,7 @@ const fr = {
             income: 'Revenu du ménage',
             common: 'Charges communes',
             personal: 'Charges perso',
-            cta: 'Ajouter mes logements →',
+            cta: 'Ajouter mes logements',
         },
     },
     housings: {
@@ -254,8 +254,8 @@ const fr = {
         text: "Entre ce que tu vois dans l'annonce et à la visite. L'outil calcule le coût réel par mois.",
         rentLine: 'Loyer {amount}',
         newName: 'Nouveau logement',
-        add: '+ Ajouter un logement',
-        addNth: '+ Ajouter un logement ({n}e)',
+        add: 'Ajouter un logement',
+        addNth: 'Ajouter un logement ({n}e)',
         empty: 'Ajoute un premier logement pour commencer.',
         remove: 'Retirer ce logement',
         name: 'Nom ou adresse',
@@ -269,8 +269,8 @@ const fr = {
             "Pas sûr du montant? Demande une facture d'Hydro aux anciens locataires.",
         oneTime: 'Frais ponctuels, une seule fois (déménagement, dépôt, etc.)',
         monthlyCost: 'Coût mensuel réel',
-        back: '← Mon ménage',
-        next: 'Voir les verdicts →',
+        back: 'Mon ménage',
+        next: 'Voir les verdicts',
         needOne: 'Ajoute au moins un logement pour voir les verdicts.',
     },
     verdicts: {
@@ -285,7 +285,7 @@ const fr = {
         no: 'Hors budget',
         best: 'Meilleur choix',
         ofIncome: 'de ton revenu',
-        partLine: 'Part : {part} ({pct} du revenu) → reste {left}',
+        partLine: 'Part : {part} ({pct} du revenu), il reste {left}',
         underLimit: '{amount} sous la limite',
         overLimit: '{amount} au-dessus de la limite',
         tiers: {
@@ -297,7 +297,7 @@ const fr = {
                 'Juste au-dessus de la limite. Il faudrait que le logement coûte {amount} de moins par mois.',
             over: 'Au-dessus de la limite. Il faudrait que le logement coûte {amount} de moins par mois.',
         },
-        edit: '← Modifier les logements',
+        edit: 'Modifier les logements',
         exportPdf: 'Exporter en PDF',
         unlocked:
             'Abrio est débloqué : logements illimités et export PDF. Merci!',

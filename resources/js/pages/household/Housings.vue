@@ -2,6 +2,7 @@
 import type { VisitOptions } from '@inertiajs/core';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
+import { ArrowLeft, Plus } from '@lucide/vue';
 import BrandLink from '@/components/BrandLink.vue';
 import InputError from '@/components/InputError.vue';
 import LimiteLogementsDialog from '@/components/LimiteLogementsDialog.vue';
@@ -171,10 +172,11 @@ defineOptions({ inheritAttrs: false });
 
                 <button
                     type="button"
-                    class="h-12 cursor-pointer rounded-xl border border-dashed border-[#B59A80] text-[15px] font-semibold"
+                    class="flex h-12 cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-[#B59A80] text-[15px] font-semibold"
                     :class="atLimit ? 'text-[#6B5647]' : 'text-[#B4540F]'"
                     @click="addHousing"
                 >
+                    <Plus class="size-4" aria-hidden="true" />
                     {{
                         atLimit
                             ? fill(t.housings.addNth, {
@@ -356,8 +358,9 @@ defineOptions({ inheritAttrs: false });
         <div class="flex flex-wrap items-center justify-between gap-4">
             <Link
                 href="/menage"
-                class="flex h-12 items-center px-2 text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08]"
+                class="flex h-12 items-center gap-2 px-2 text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08]"
             >
+                <ArrowLeft class="size-4" aria-hidden="true" />
                 {{ t.housings.back }}
             </Link>
             <span v-if="!form.housings.length" class="text-sm text-[#6B5647]">{{

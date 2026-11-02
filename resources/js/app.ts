@@ -1,5 +1,4 @@
 import { createInertiaApp } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import OnboardingLayout from '@/layouts/OnboardingLayout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
@@ -20,7 +19,7 @@ void createInertiaApp({
             case name.startsWith('settings/'):
                 return null;
             default:
-                return AppLayout;
+                return null;
         }
     },
     withApp: (app) => {
