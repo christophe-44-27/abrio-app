@@ -26,9 +26,11 @@ void createInertiaApp({
     },
     withApp: (app) => {
         // The cookie notice lives in its own tiny app so every layout gets it.
-        const noticeRoot = document.createElement('div');
-        document.body.appendChild(noticeRoot);
-        createApp(CookieBanner).mount(noticeRoot);
+        if (typeof document !== 'undefined') {
+            const noticeRoot = document.createElement('div');
+            document.body.appendChild(noticeRoot);
+            createApp(CookieBanner).mount(noticeRoot);
+        }
 
         app.directive('focus', {
             mounted: (el: HTMLElement, shouldFocus) => {
