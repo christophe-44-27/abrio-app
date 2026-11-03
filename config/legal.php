@@ -14,7 +14,6 @@ return [
 
     'operator' => env('LEGAL_OPERATOR', 'Christophe Lablancherie'),
     'address' => env('LEGAL_ADDRESS'),
-    'neq' => env('LEGAL_NEQ'),
     'host' => env('LEGAL_HOST'),
 
 ];

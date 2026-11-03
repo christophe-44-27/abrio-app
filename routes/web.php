@@ -30,7 +30,6 @@ Route::get('legal/{slug}', function (string $slug) {
         'legal' => [
             'operator' => config('legal.operator'),
             'address' => config('legal.address'),
-            'neq' => config('legal.neq'),
             'host' => config('legal.host'),
             'email' => config('app.support_email'),
         ],

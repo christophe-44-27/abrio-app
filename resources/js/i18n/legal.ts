@@ -11,7 +11,7 @@ export type LegalDoc = {
 export const legalSlugs: LegalSlug[] = ['terms', 'privacy', 'legal-notice'];
 
 /*
- * Placeholders ({operator}, {email}, {address}, {neq}, {host}) are filled from
+ * Placeholders ({operator}, {email}, {address}, {host}) are filled from
  * config/legal.php by the Legal page.
  */
 const fr: Record<LegalSlug, LegalDoc> = {
@@ -166,7 +166,6 @@ const fr: Record<LegalSlug, LegalDoc> = {
                 paragraphs: [
                     "Abrio est édité par {operator}, entrepreneur individuel.",
                     "Adresse : {address}",
-                    "NEQ : {neq}",
                     "Courriel : {email}",
                 ],
             },
@@ -352,7 +351,6 @@ const en: Record<LegalSlug, LegalDoc> = {
                 paragraphs: [
                     'Abrio is published by {operator}, sole proprietor.',
                     'Address: {address}',
-                    'NEQ (Quebec enterprise number): {neq}',
                     'Email: {email}',
                 ],
             },

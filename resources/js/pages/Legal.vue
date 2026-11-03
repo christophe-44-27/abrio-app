@@ -14,7 +14,6 @@ const props = defineProps<{
     legal: {
         operator: string;
         address: string | null;
-        neq: string | null;
         host: string | null;
         email: string;
     };
@@ -29,7 +28,7 @@ const placeholder = computed(() =>
 );
 
 const fill = (text: string): string =>
-    text.replace(/\{(operator|email|address|neq|host)\}/g, (_, key) => {
+    text.replace(/\{(operator|email|address|host)\}/g, (_, key) => {
         return props.legal[key as keyof typeof props.legal] || placeholder.value;
     });
 </script>
