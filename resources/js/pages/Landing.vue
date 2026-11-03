@@ -57,7 +57,12 @@ defineOptions({ inheritAttrs: false });
         <meta
             head-key="og:image"
             property="og:image"
-            :content="`${urls.fr.replace(/\/$/, '')}/assets/images/logo.webp`"
+            :content="`${urls.fr.replace(/\/$/, '')}/assets/images/og-image.png`"
+        />
+        <meta
+            head-key="twitter:card"
+            name="twitter:card"
+            content="summary_large_image"
         />
         <meta
             head-key="og:locale"
