@@ -573,7 +573,7 @@ const fr = {
             metaTitle: 'Valider ton courriel',
             title: 'Valide ton courriel',
             description:
-                'Nous avons envoyé un code à 6 chiffres à {email}. Il expire dans 15 minutes.',
+                'Nous avons envoyé un code à 6 chiffres à {email}. Il expire dans 15 minutes. Si tu ne le vois pas, vérifie tes courriels indésirables (spams).',
             code: 'Code de validation',
             submit: 'Valider',
             resend: 'Renvoyer le code',

@@ -572,7 +572,7 @@ const en: Messages = {
             metaTitle: 'Verify your email',
             title: 'Verify your email',
             description:
-                'We sent a 6-digit code to {email}. It expires in 15 minutes.',
+                'We sent a 6-digit code to {email}. It expires in 15 minutes. If you don’t see it, check your spam folder.',
             code: 'Verification code',
             submit: 'Verify',
             resend: 'Resend code',
