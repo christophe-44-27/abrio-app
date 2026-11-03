@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
+import InvitationController from '@/actions/App/Http/Controllers/InvitationController';
 import BrandLink from '@/components/BrandLink.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
 import { useI18n } from '@/composables/useI18n';
+import { fill } from '@/lib/utils';
 import { settingsButton } from '@/lib/authStyles';
 
 const props = defineProps<{
@@ -14,13 +16,8 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-const fill = (text: string, vars: Record<string, string | undefined>) =>
-    Object.entries(vars).reduce(
-        (s, [k, v]) => s.replace(`{${k}}`, v ?? ''),
-        text,
-    );
-
-const accept = () => router.post(`/invitations/${props.token}`);
+const accept = () =>
+    router.post(InvitationController.accept.url({ token: props.token ?? '' }));
 
 defineOptions({ inheritAttrs: false });
 </script>

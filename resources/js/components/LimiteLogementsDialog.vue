@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from '@/composables/useI18n';
 
-defineProps<{ open: boolean; reason?: 'housings' | 'pdf' }>();
+defineProps<{ open: boolean }>();
 const emit = defineEmits<{ dismiss: [] }>();
 
 const { t } = useI18n();
@@ -25,7 +25,7 @@ const { t } = useI18n();
                     {{ t.limit.badge }}
                 </span>
                 <h2 class="text-[28px] font-extrabold tracking-[-0.02em]">
-                    {{ reason === 'pdf' ? t.limit.pdfTitle : t.limit.title }}
+                    {{ t.limit.title }}
                 </h2>
                 <p class="text-base leading-normal text-[#6B5647]">
                     {{ t.limit.text }}

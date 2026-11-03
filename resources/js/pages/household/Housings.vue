@@ -12,6 +12,7 @@ import SaveBar from '@/components/SaveBar.vue';
 import StepNav from '@/components/StepNav.vue';
 import { useManualSave } from '@/composables/useManualSave';
 import { useI18n } from '@/composables/useI18n';
+import { fill } from '@/lib/utils';
 import {
     formatMoney,
     formatPercent,
@@ -49,12 +50,6 @@ const atLimit = computed(
 );
 
 const money = (value: number) => formatMoney(value, locale.value);
-const fill = (text: string, vars: Record<string, string | number>) =>
-    Object.entries(vars).reduce(
-        (s, [k, v]) => s.replace(`{${k}}`, String(v)),
-        text,
-    );
-
 const memberShares = computed(() => shares(props.household.members));
 
 const addHousing = () => {
@@ -398,7 +393,6 @@ defineOptions({ inheritAttrs: false });
 
         <LimiteLogementsDialog
             :open="showLimit"
-            reason="housings"
             @dismiss="showLimit = false"
         />
     </form>

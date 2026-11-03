@@ -11,6 +11,7 @@ import SaveBar from '@/components/SaveBar.vue';
 import StepNav from '@/components/StepNav.vue';
 import { useManualSave } from '@/composables/useManualSave';
 import { useI18n } from '@/composables/useI18n';
+import { fill } from '@/lib/utils';
 import {
     commonPart,
     commonSubtotal,
@@ -46,11 +47,6 @@ const form = useForm<Household>({
     })),
 });
 
-const fill = (text: string, vars: Record<string, string | number>) =>
-    Object.entries(vars).reduce(
-        (s, [k, v]) => s.replace(`{${k}}`, String(v)),
-        text,
-    );
 const money = (value: number) => formatMoney(value, locale.value);
 
 const memberShares = computed(() => shares(form.members));

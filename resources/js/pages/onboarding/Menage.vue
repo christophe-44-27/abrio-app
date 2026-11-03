@@ -5,6 +5,7 @@ import InputError from '@/components/InputError.vue';
 import BrandLink from '@/components/BrandLink.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
 import { useI18n } from '@/composables/useI18n';
+import { fill } from '@/lib/utils';
 
 const props = defineProps<{
     people: { id: string; name: string }[];
@@ -25,12 +26,6 @@ const form = useForm<{ people: { id: string | null; name: string }[] }>({
 
 const addPerson = () => form.people.push({ id: null, name: '' });
 const removePerson = (index: number) => form.people.splice(index, 1);
-const fill = (text: string, vars: Record<string, string | number>) =>
-    Object.entries(vars).reduce(
-        (s, [k, v]) => s.replace(`{${k}}`, String(v)),
-        text,
-    );
-
 defineOptions({ inheritAttrs: false });
 </script>
 

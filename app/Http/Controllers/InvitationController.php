@@ -15,8 +15,6 @@ use Inertia\Response;
  */
 class InvitationController extends Controller
 {
-    public const SESSION_KEY = 'invitation_token';
-
     public function show(Request $request, string $token): Response|RedirectResponse
     {
         $invitation = HouseholdInvitation::findValid($token);
@@ -32,7 +30,7 @@ class InvitationController extends Controller
                 return redirect()->guest(route('login'));
             }
 
-            $request->session()->put(self::SESSION_KEY, $token);
+            HouseholdInvitation::remember($token);
 
             return redirect()->route('register');
         }
@@ -52,8 +50,7 @@ class InvitationController extends Controller
         abort_if($invitation === null, 404);
         abort_unless($this->stateFor($request->user(), $invitation) === 'confirm', 403);
 
-        $request->user()->forceFill(['joined_household_id' => $invitation->household_id])->save();
-        $invitation->delete();
+        $invitation->acceptBy($request->user());
 
         return $this->withToast(redirect()->route('dashboard'), __('team.joined'));
     }
@@ -64,7 +61,7 @@ class InvitationController extends Controller
             return 'wrong_account';
         }
 
-        if ($user->household || $user->joined_household_id) {
+        if ($user->hasHousehold()) {
             return 'unavailable';
         }
 

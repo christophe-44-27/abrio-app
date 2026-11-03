@@ -202,6 +202,7 @@ class TeamTest extends TestCase
             'province' => 'QC',
             'password' => 'a-Very-Strong-Passw0rd!',
             'password_confirmation' => 'a-Very-Strong-Passw0rd!',
+            'terms' => '1',
         ])->assertSessionHasNoErrors();
 
         $user = User::where('email', $email)->firstOrFail();
@@ -225,6 +226,7 @@ class TeamTest extends TestCase
             'province' => 'QC',
             'password' => 'a-Very-Strong-Passw0rd!',
             'password_confirmation' => 'a-Very-Strong-Passw0rd!',
+            'terms' => '1',
         ]);
 
         $user = User::where('email', 'someone-else@example.com')->firstOrFail();

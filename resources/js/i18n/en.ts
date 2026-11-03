@@ -50,8 +50,8 @@ const en: Messages = {
                 text: "Above 30% of your net income, it's too much. Every place is ranked, with each person's share and what they have left.",
             },
             {
-                title: 'A result to keep',
-                text: 'Export your comparison as a PDF to talk it over together, or keep it handy during visits.',
+                title: 'Easy to share',
+                text: 'Invite your partner or someone close to edit the budget with you, or send a public link to show them the comparison.',
             },
         ],
     },
@@ -78,7 +78,7 @@ const en: Messages = {
         items: [
             {
                 title: 'The 30% rule',
-                text: "The most common guideline for a housing budget is to stay under 30% of household income. Beyond that, there's often little left for groceries, transport, savings and the unexpected.",
+                text: "The most common guideline for a housing budget is to stay under 30% of household income. It has been a benchmark for decades, notably among housing agencies. Example: with $4,000 net per month, housing should stay under $1,200, utilities included. Beyond that, there's often little left for groceries, transport, savings and the unexpected. It's not a law: depending on your debts, kids or lifestyle, you may aim lower or, in a tight rental market, accept going slightly over. Abrio simply shows where each apartment stands.",
             },
             {
                 title: 'Compare the real cost, not just the rent',
@@ -116,7 +116,6 @@ const en: Messages = {
                 'Unlimited places',
                 'Invite up to 4 people to edit the budget with you',
                 'Public link to share the comparison',
-                'PDF export of your comparison',
             ],
             cta: 'Unlock for $9.99',
         },
@@ -126,8 +125,10 @@ const en: Messages = {
         name: 'Christophe',
         paragraphs: [
             'Web developer for over 10 years, based in Quebec City since 2017. I built Abrio so choosing a home together rests on clear numbers.',
-            'I had an Excel file that let me do these calculations. I wanted to put it online to make it easier.',
+            'At first, I made an Excel file to make my life easier when working out the numbers on the odd apartment. Then I thought, "Why not share it with everyone?" And just like that, Abrio was born!',
+            "In Quebec City, things move fast: everyone who wants to move does so on July 1st, so listings go up and get snapped up very quickly. You're better off comparing in a few minutes.",
         ],
+        linkedin: 'Follow me on LinkedIn',
     },
     faq: {
         title: 'Frequently asked questions',
@@ -303,20 +304,17 @@ const en: Messages = {
             over: 'Over the limit. The place would need to cost {amount} less per month.',
         },
         edit: 'Edit places',
-        exportPdf: 'Export as PDF',
         unlocked:
-            'Abrio is unlocked: unlimited places, invitations, public link and PDF export. Thank you!',
+            'Abrio is unlocked: unlimited places, invitations, public link. Thank you!',
     },
     limit: {
         badge: 'Limit reached',
         title: "You've compared 2 places",
         text: 'The free version stops at 2 places. Unlock Abrio once to add as many as you want.',
-        pdfTitle: 'PDF export is included in the unlimited version',
         price: '$9.99',
         priceNote: 'one-time, forever',
         perks: [
             'Unlimited places',
-            'PDF export of your comparison',
             'Invite people to edit the budget with you',
             'Public link to share the comparison',
         ],
@@ -584,6 +582,28 @@ const en: Messages = {
     },
     footer: {
         switchText: 'Français',
+    },
+    legal: {
+        nav: 'Legal documents',
+        titles: {
+            terms: 'Terms',
+            privacy: 'Privacy',
+            'legal-notice': 'Legal notice',
+        },
+    },
+    cookies: {
+        title: 'Cookies',
+        text: 'Abrio only uses cookies that are essential to the site (login, security, preferences). No advertising tracking.',
+        more: 'Learn more',
+        ok: 'Got it',
+    },
+    consent: {
+        termsPrefix: 'I accept the',
+        terms: 'terms of use and sale',
+        termsAnd: 'and the',
+        privacy: 'privacy policy',
+        marketing:
+            'I’d like to receive news and offers from Abrio by email (optional, you can opt out at any time).',
     },
 };
 

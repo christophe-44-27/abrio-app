@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Support\UnlockCheckout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,13 +15,14 @@ class PremiumController extends Controller
     public function edit(Request $request): Response
     {
         $user = $request->user();
+        $payer = $user->payer();
 
         return Inertia::render('settings/Premium', [
-            'unlocked' => $user->isUnlocked(),
-            'unlockedAt' => ($user->hasPaid() ? $user : $user->joinedHousehold?->user)?->unlocked_at?->toIso8601String(),
+            'unlocked' => $payer !== null,
+            'unlockedAt' => $payer?->unlocked_at?->toIso8601String(),
             'isMember' => $user->joined_household_id !== null,
-            'hasInvoice' => $user->isUnlocked() && filled($user->unlock_checkout_session_id),
-            'housingLimit' => $user->housingLimit(),
+            'hasInvoice' => $user->hasPaid() && filled($user->unlock_checkout_session_id),
+            'housingLimit' => $payer ? null : User::FREE_HOUSING_LIMIT,
         ]);
     }
 

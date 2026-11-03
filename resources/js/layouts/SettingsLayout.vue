@@ -8,6 +8,7 @@ import { useI18n } from '@/composables/useI18n';
 import { edit as editPremium } from '@/routes/premium';
 import { edit as editProfile } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
+import { edit as editTeam } from '@/routes/team';
 
 defineOptions({ inheritAttrs: false });
 
@@ -17,7 +18,7 @@ const { isCurrentOrParentUrl } = useCurrentUrl();
 const items = [
     { key: 'profile', href: editProfile() },
     { key: 'premium', href: editPremium() },
-    { key: 'team', href: '/settings/team' },
+    { key: 'team', href: editTeam() },
     { key: 'security', href: editSecurity() },
 ] as const;
 </script>

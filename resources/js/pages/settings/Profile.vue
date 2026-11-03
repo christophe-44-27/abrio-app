@@ -63,6 +63,17 @@ const user = computed(() => page.props.auth.user);
                 <InputError :message="errors.email" />
             </div>
 
+            <label class="flex items-start gap-3 text-sm text-[#43302A]">
+                <input
+                    type="checkbox"
+                    name="marketing"
+                    value="1"
+                    :checked="!!user.marketing_opt_in_at"
+                    class="mt-0.5 size-5 shrink-0 accent-[#2B1D14]"
+                />
+                <span>{{ t.consent.marketing }}</span>
+            </label>
+
             <div
                 v-if="page.props.mustVerifyEmail && !user.email_verified_at"
                 class="flex flex-col gap-1 text-sm text-[#6B5647]"

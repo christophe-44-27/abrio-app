@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
-import { ArrowLeft, Download } from '@lucide/vue';
-import LimiteLogementsDialog from '@/components/LimiteLogementsDialog.vue';
+import { computed } from 'vue';
+import { ArrowLeft } from '@lucide/vue';
 import BrandLink from '@/components/BrandLink.vue';
 import HeaderTools from '@/components/HeaderTools.vue';
 import LocaleSwitch from '@/components/LocaleSwitch.vue';
 import StepNav from '@/components/StepNav.vue';
 import { useI18n } from '@/composables/useI18n';
+import { fill } from '@/lib/utils';
 import {
     HOUSING_LIMIT,
     formatMoney,
@@ -19,7 +19,6 @@ import type { Household, Housing } from '@/lib/household';
 const props = defineProps<{
     household: Household;
     housings: Housing[];
-    unlocked: boolean;
     justUnlocked?: boolean;
     /** Public read-only view, reached through the owner's secret link. */
     shared?: boolean;
@@ -34,26 +33,11 @@ const verdicts = computed(() =>
 const money = (value: number) => formatMoney(value, locale.value);
 const pct = (value: number) =>
     Number.isFinite(value) ? formatPercent(value, locale.value) : '—';
-const fill = (text: string, vars: Record<string, string | number>) =>
-    Object.entries(vars).reduce(
-        (s, [k, v]) => s.replace(`{${k}}`, String(v)),
-        text,
-    );
-
 /** The bar spans 0 to 40% of income, so the 30% limit sits at 75%. */
 const SCALE = 0.4;
 const barWidth = (ratio: number) =>
     `${Math.min(100, ((Number.isFinite(ratio) ? ratio : 1) / SCALE) * 100)}%`;
 const limitLeft = `${(HOUSING_LIMIT / SCALE) * 100}%`;
-
-const showUpsell = ref(false);
-const exportPdf = () => {
-    if (props.unlocked) {
-        window.print();
-    } else {
-        showUpsell.value = true;
-    }
-};
 
 defineOptions({ inheritAttrs: false });
 </script>
@@ -219,31 +203,13 @@ defineOptions({ inheritAttrs: false });
             </li>
         </ol>
 
-        <div
-            class="flex flex-wrap items-center justify-between gap-4 print:hidden"
+        <Link
+            v-if="!shared"
+            href="/logements"
+            class="flex h-12 items-center gap-2 self-start px-2 text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08] print:hidden"
         >
-            <Link
-                v-if="!shared"
-                href="/logements"
-                class="flex h-12 items-center gap-2 px-2 text-[15px] font-semibold text-[#B4540F] hover:text-[#8F3F08]"
-            >
-                <ArrowLeft class="size-4" aria-hidden="true" />
-                {{ t.verdicts.edit }}
-            </Link>
-            <button
-                type="button"
-                class="flex h-[52px] cursor-pointer items-center gap-2 rounded-xl border-2 border-[#2B1D14] bg-white px-6 text-base font-extrabold"
-                @click="exportPdf"
-            >
-                <Download class="size-[18px]" aria-hidden="true" />
-                {{ t.verdicts.exportPdf }}
-            </button>
-        </div>
-
-        <LimiteLogementsDialog
-            :open="showUpsell"
-            reason="pdf"
-            @dismiss="showUpsell = false"
-        />
+            <ArrowLeft class="size-4" aria-hidden="true" />
+            {{ t.verdicts.edit }}
+        </Link>
     </div>
 </template>

@@ -27,6 +27,9 @@ class HouseholdInvitation extends Model
 {
     public const TTL_DAYS = 7;
 
+    /** Session key that carries a followed invitation link through to registration. */
+    private const SESSION_KEY = 'invitation_token';
+
     protected function casts(): array
     {
         return ['expires_at' => 'datetime'];
@@ -42,9 +45,43 @@ class HouseholdInvitation extends Model
      */
     public static function findValid(string $token): ?self
     {
-        return self::where('token', self::hash($token))
+        return self::with('inviter')
+            ->where('token', self::hash($token))
             ->where('expires_at', '>', now())
             ->first();
+    }
+
+    /**
+     * Keep the followed link until the visitor has registered.
+     */
+    public static function remember(string $token): void
+    {
+        session([self::SESSION_KEY => $token]);
+    }
+
+    /**
+     * The invitation whose link the visitor followed, if still usable.
+     */
+    public static function pending(): ?self
+    {
+        $token = session(self::SESSION_KEY);
+
+        return $token ? self::findValid($token) : null;
+    }
+
+    /**
+     * Put the user in the household. Having received the invitation proves
+     * the address is theirs, so it counts as verified.
+     */
+    public function acceptBy(User $user): void
+    {
+        $user->forceFill([
+            'joined_household_id' => $this->household_id,
+            'email_verified_at' => $user->email_verified_at ?? now(),
+        ])->save();
+
+        $this->delete();
+        session()->forget(self::SESSION_KEY);
     }
 
     public function isExpired(): bool

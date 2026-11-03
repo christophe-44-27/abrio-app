@@ -6,6 +6,7 @@ export type User = {
     province: string | null;
     avatar?: string;
     email_verified_at: string | null;
+    marketing_opt_in_at?: string | null;
     two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;

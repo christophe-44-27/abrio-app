@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'accepted' => 'Tu dois accepter les conditions pour créer un compte.',
+    'boolean' => 'Le champ :attribute est invalide.',
     'confirmed' => 'La confirmation du :attribute ne correspond pas.',
     'digits' => 'Le :attribute doit contenir :digits chiffres.',
     'email' => 'Le :attribute doit être une adresse courriel valide.',

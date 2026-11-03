@@ -21,7 +21,6 @@ class SharedVerdictController extends Controller
         return Inertia::render('household/Verdicts', [
             'household' => $household->only(['members', 'common_expenses', 'personal_expenses']),
             'housings' => $household->housings,
-            'unlocked' => true,
             'shared' => true,
         ]);
     }

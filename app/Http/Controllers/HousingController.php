@@ -59,14 +59,7 @@ class HousingController extends Controller
             ], $data['housings'])),
         ], $data['revision'] ?? null);
 
-        if (! $saved) {
-            return back()->withErrors(['conflict' => __('team.conflict')]);
-        }
-
-        // Background saves ("continue" absent) stay on the page.
-        return $request->boolean('continue')
-            ? redirect()->route('verdicts')
-            : back();
+        return $this->afterHouseholdSave($request, $saved, 'verdicts');
     }
 
     public function verdicts(Request $request): Response|RedirectResponse
@@ -84,7 +77,6 @@ class HousingController extends Controller
         return Inertia::render('household/Verdicts', [
             'household' => $household->only(['members', 'common_expenses', 'personal_expenses']),
             'housings' => $household->housings,
-            'unlocked' => $request->user()->isUnlocked(),
             'justUnlocked' => $request->boolean('unlocked') && $request->user()->isUnlocked(),
         ]);
     }

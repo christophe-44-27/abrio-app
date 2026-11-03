@@ -33,6 +33,7 @@ class RegistrationTest extends TestCase
             'province' => 'QC',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'terms' => '1',
         ]);
 
         $this->assertAuthenticated();
@@ -53,6 +54,7 @@ class RegistrationTest extends TestCase
             'province' => 'TX',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'terms' => '1',
         ])->assertSessionHasErrors('province');
 
         $this->assertGuest();
@@ -66,6 +68,7 @@ class RegistrationTest extends TestCase
             'country' => 'FR',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'terms' => '1',
         ])->assertSessionHasNoErrors();
 
         $this->assertAuthenticated();

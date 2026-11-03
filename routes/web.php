@@ -24,6 +24,19 @@ foreach (['fr' => '/', 'en' => '/en'] as $locale => $uri) {
     })->name($locale === 'fr' ? 'home' : 'home.en');
 }
 
+Route::get('legal/{slug}', function (string $slug) {
+    return Inertia::render('Legal', [
+        'slug' => $slug,
+        'legal' => [
+            'operator' => config('legal.operator'),
+            'address' => config('legal.address'),
+            'neq' => config('legal.neq'),
+            'host' => config('legal.host'),
+            'email' => config('app.support_email'),
+        ],
+    ]);
+})->whereIn('slug', ['terms', 'privacy', 'legal-notice'])->name('legal');
+
 Route::post('contact', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');

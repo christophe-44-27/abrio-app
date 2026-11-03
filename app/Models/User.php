@@ -25,6 +25,10 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string $email
  * @property string $country
  * @property string|null $province
+ * @property string|null $registration_ip
+ * @property string|null $last_login_ip
+ * @property Carbon|null $terms_accepted_at
+ * @property Carbon|null $marketing_opt_in_at
  * @property Carbon|null $email_verified_at
  * @property Carbon|null $unlocked_at
  * @property string|null $unlock_checkout_session_id
@@ -39,7 +43,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property-read Household|null $household
  * @property-read Household|null $joinedHousehold
  */
-#[Fillable(['name', 'email', 'country', 'province', 'password', 'joined_household_id'])]
+#[Fillable(['name', 'email', 'country', 'province', 'password', 'joined_household_id', 'registration_ip', 'terms_accepted_at', 'marketing_opt_in_at'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
@@ -67,19 +71,31 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     }
 
     /**
-     * Unlocked by their own purchase, or by the owner of the household they joined.
+     * Who paid for this user's access: themselves, or the owner of the household they joined.
      */
+    public function payer(): ?self
+    {
+        if ($this->hasPaid()) {
+            return $this;
+        }
+
+        $owner = $this->joinedHousehold?->user;
+
+        return $owner?->hasPaid() ? $owner : null;
+    }
+
     public function isUnlocked(): bool
     {
-        return $this->hasPaid() || $this->joinedHousehold?->isUnlocked() === true;
+        return $this->payer() !== null;
     }
 
     /**
-     * Lift the free housing limit (one-time purchase). Idempotent.
+     * Lift the free housing limit (one-time purchase). Idempotent: a payment
+     * is recorded even for someone who already has access through a household.
      */
     public function markUnlocked(?string $checkoutSessionId = null): void
     {
-        if (! $this->isUnlocked()) {
+        if (! $this->hasPaid()) {
             $this->forceFill([
                 'unlocked_at' => now(),
                 'unlock_checkout_session_id' => $checkoutSessionId,
@@ -120,12 +136,18 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
      */
     public function currentHousehold(): ?Household
     {
-        return $this->household ?? $this->joinedHousehold;
+        return $this->joined_household_id ? $this->joinedHousehold : $this->household;
     }
 
-    public function ownsHousehold(Household $household): bool
+    public function hasHousehold(): bool
     {
-        return $household->user_id === $this->id;
+        return $this->currentHousehold() !== null;
+    }
+
+    public function leaveHousehold(): void
+    {
+        $this->forceFill(['joined_household_id' => null])->save();
+        $this->unsetRelation('joinedHousehold');
     }
 
     /**
@@ -138,6 +160,8 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
         return [
             'email_verified_at' => 'datetime',
             'unlocked_at' => 'datetime',
+            'terms_accepted_at' => 'datetime',
+            'marketing_opt_in_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];

@@ -134,13 +134,6 @@ class HouseholdController extends Controller
             ], $data['personal_expenses'])),
         ], $data['revision'] ?? null);
 
-        if (! $saved) {
-            return back()->withErrors(['conflict' => __('team.conflict')]);
-        }
-
-        // Background saves ("continue" absent) stay on the page.
-        return $request->boolean('continue')
-            ? redirect()->route('housings.edit')
-            : back();
+        return $this->afterHouseholdSave($request, $saved, 'housings.edit');
     }
 }

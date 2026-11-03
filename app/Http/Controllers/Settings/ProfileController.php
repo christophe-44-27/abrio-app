@@ -30,7 +30,13 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $request->user()->fill($request->safe()->only(['name', 'email']));
+
+        $wantsMarketing = $request->boolean('marketing');
+
+        if ($wantsMarketing !== ($request->user()->marketing_opt_in_at !== null)) {
+            $request->user()->marketing_opt_in_at = $wantsMarketing ? now() : null;
+        }
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

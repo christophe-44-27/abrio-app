@@ -1,4 +1,6 @@
 import { createInertiaApp } from '@inertiajs/vue3';
+import { createApp } from 'vue';
+import CookieBanner from '@/components/CookieBanner.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import OnboardingLayout from '@/layouts/OnboardingLayout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
@@ -23,6 +25,11 @@ void createInertiaApp({
         }
     },
     withApp: (app) => {
+        // The cookie notice lives in its own tiny app so every layout gets it.
+        const noticeRoot = document.createElement('div');
+        document.body.appendChild(noticeRoot);
+        createApp(CookieBanner).mount(noticeRoot);
+
         app.directive('focus', {
             mounted: (el: HTMLElement, shouldFocus) => {
                 if (shouldFocus.value !== false) {

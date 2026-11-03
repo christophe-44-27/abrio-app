@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import TeamController from '@/actions/App/Http/Controllers/Settings/TeamController';
 import InputError from '@/components/InputError.vue';
 import SettingsSection from '@/components/SettingsSection.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useI18n } from '@/composables/useI18n';
+import { fill } from '@/lib/utils';
 import SettingsLayout from '@/layouts/SettingsLayout.vue';
 import {
     authInput,
@@ -39,30 +41,24 @@ defineProps<{
 
 const { t } = useI18n();
 
-const fill = (text: string, vars: Record<string, string | number>) =>
-    Object.entries(vars).reduce(
-        (s, [k, v]) => s.replace(`{${k}}`, String(v)),
-        text,
-    );
-
 const invite = useForm({ email: '' });
 
 const sendInvitation = () =>
-    invite.post('/settings/team/invitations', {
+    invite.post(TeamController.invite.url(), {
         preserveScroll: true,
         onSuccess: () => invite.reset(),
     });
 
 // A resend is an invitation to the same address: it replaces the old link.
 const resend = (email: string) =>
-    router.post('/settings/team/invitations', { email }, { preserveScroll: true });
+    router.post(TeamController.invite.url(), { email }, { preserveScroll: true });
 
 const cancelInvitation = (id: number) =>
-    router.delete(`/settings/team/invitations/${id}`, { preserveScroll: true });
+    router.delete(TeamController.cancelInvitation.url(id), { preserveScroll: true });
 
 const removeMember = (member: Member) => {
     if (window.confirm(fill(t.value.settings.team.removeConfirm, { name: member.name }))) {
-        router.delete(`/settings/team/members/${member.id}`, {
+        router.delete(TeamController.removeMember.url(member.id), {
             preserveScroll: true,
         });
     }
@@ -70,14 +66,14 @@ const removeMember = (member: Member) => {
 
 const leave = () => {
     if (window.confirm(t.value.settings.team.leaveConfirm)) {
-        router.post('/settings/team/leave');
+        router.post(TeamController.leave.url());
     }
 };
 
 const startSharing = () =>
-    router.post('/settings/team/share', {}, { preserveScroll: true });
+    router.post(TeamController.startSharing.url(), {}, { preserveScroll: true });
 const stopSharing = () =>
-    router.delete('/settings/team/share', { preserveScroll: true });
+    router.delete(TeamController.stopSharing.url(), { preserveScroll: true });
 
 const copied = ref(false);
 // The async Clipboard API only exists on secure origins (https, localhost);

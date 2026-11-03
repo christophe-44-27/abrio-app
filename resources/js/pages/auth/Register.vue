@@ -216,10 +216,53 @@ const selectClass = `${authInput} w-full border bg-white`;
                     <InputError :message="errors.password_confirmation" />
                 </div>
 
+                <div class="grid gap-3 text-sm text-[#43302A]">
+                    <label class="flex items-start gap-3">
+                        <input
+                            type="checkbox"
+                            name="terms"
+                            value="1"
+                            required
+                            :tabindex="7"
+                            class="mt-0.5 size-5 shrink-0 accent-[#2B1D14]"
+                        />
+                        <span>
+                            {{ t.consent.termsPrefix }}
+                            <a
+                                href="/legal/terms"
+                                target="_blank"
+                                rel="noopener"
+                                :class="authLink"
+                                >{{ t.consent.terms }}</a
+                            >
+                            {{ t.consent.termsAnd }}
+                            <a
+                                href="/legal/privacy"
+                                target="_blank"
+                                rel="noopener"
+                                :class="authLink"
+                                >{{ t.consent.privacy }}</a
+                            >.
+                        </span>
+                    </label>
+                    <InputError :message="errors.terms" />
+
+                    <label class="flex items-start gap-3">
+                        <input
+                            type="checkbox"
+                            name="marketing"
+                            value="1"
+                            :tabindex="8"
+                            class="mt-0.5 size-5 shrink-0 accent-[#2B1D14]"
+                        />
+                        <span>{{ t.consent.marketing }}</span>
+                    </label>
+                </div>
+
                 <Button
                     type="submit"
                     :class="authButton"
-                    tabindex="7"
+                    tabindex="9"
                     :disabled="processing"
                     data-test="register-user-button"
                 >
@@ -230,7 +273,7 @@ const selectClass = `${authInput} w-full border bg-white`;
 
             <div class="text-center text-sm text-[#6B5647]">
                 {{ t.auth.register.haveAccount }}
-                <TextLink :href="login()" :class="authLink" :tabindex="8">
+                <TextLink :href="login()" :class="authLink" :tabindex="10">
                     {{ t.auth.register.logIn }}
                 </TextLink>
             </div>

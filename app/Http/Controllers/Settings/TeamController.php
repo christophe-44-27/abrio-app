@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Notifications\HouseholdInvitationNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -23,39 +22,44 @@ class TeamController extends Controller
         $user = $request->user();
         $household = $user->currentHousehold();
 
-        if (! $household) {
-            return Inertia::render('settings/Team', ['team' => null, 'unlocked' => $user->isUnlocked()]);
-        }
-
-        $isOwner = $user->ownsHousehold($household);
-
         return Inertia::render('settings/Team', [
-            'unlocked' => $household->isUnlocked(),
-            'team' => [
-                'isOwner' => $isOwner,
-                'maxUsers' => Household::MAX_USERS,
-                'freeSeats' => $household->freeSeats(),
-                'members' => collect([$household->user, ...$household->team()->orderBy('name')->get()])
-                    ->map(fn (User $u) => [
-                        'id' => $u->id,
-                        'name' => $u->name,
-                        'email' => $u->email,
-                        'isOwner' => $u->is($household->user),
-                        'isYou' => $u->is($user),
-                    ])->values(),
-                // Only the owner sees who is invited, and the public link.
-                'invitations' => $isOwner
-                    ? $household->invitations()->orderBy('created_at')->get()->map(fn ($i) => [
-                        'id' => $i->id,
-                        'email' => $i->email,
-                        'expired' => $i->isExpired(),
-                    ])->values()
-                    : [],
-                'shareUrl' => $isOwner && $household->share_token
-                    ? route('shared.verdicts', $household->share_token)
-                    : null,
-            ],
+            'unlocked' => $household?->isUnlocked() ?? $user->isUnlocked(),
+            'team' => $household ? $this->teamPayload($household, $user) : null,
         ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function teamPayload(Household $household, User $viewer): array
+    {
+        $isOwner = $household->user_id === $viewer->id;
+        $owner = $isOwner ? $viewer : $household->user;
+
+        return [
+            'isOwner' => $isOwner,
+            'maxUsers' => Household::MAX_USERS,
+            'freeSeats' => $household->freeSeats(),
+            'members' => collect([$owner, ...$household->team()->orderBy('name')->get()])
+                ->map(fn (User $u) => [
+                    'id' => $u->id,
+                    'name' => $u->name,
+                    'email' => $u->email,
+                    'isOwner' => $u->id === $household->user_id,
+                    'isYou' => $u->id === $viewer->id,
+                ])->values(),
+            // Only the owner sees who is invited, and the public link.
+            'invitations' => $isOwner
+                ? $household->invitations()->orderBy('created_at')->get()->map(fn ($i) => [
+                    'id' => $i->id,
+                    'email' => $i->email,
+                    'expired' => $i->isExpired(),
+                ])->values()
+                : [],
+            'shareUrl' => $isOwner && $household->share_token
+                ? route('shared.verdicts', $household->share_token)
+                : null,
+        ];
     }
 
     public function invite(Request $request): RedirectResponse
@@ -70,11 +74,11 @@ class TeamController extends Controller
 
         $existing = User::where('email', $email)->first();
 
-        if ($existing && ($existing->joined_household_id === $household->id || $existing->is($household->user))) {
+        if ($existing && $existing->currentHousehold()?->is($household)) {
             throw ValidationException::withMessages(['email' => __('team.already_member')]);
         }
 
-        if ($existing && ($existing->household || $existing->joined_household_id)) {
+        if ($existing?->hasHousehold()) {
             throw ValidationException::withMessages(['email' => __('team.has_household')]);
         }
 
@@ -118,7 +122,7 @@ class TeamController extends Controller
 
         abort_unless($member->joined_household_id === $household->id, 404);
 
-        $member->forceFill(['joined_household_id' => null])->save();
+        $member->leaveHousehold();
 
         return $this->withToast(back(), __('team.member_removed', ['name' => $member->name]));
     }
@@ -132,7 +136,7 @@ class TeamController extends Controller
 
         abort_if($user->joined_household_id === null, 404);
 
-        $user->forceFill(['joined_household_id' => null])->save();
+        $user->leaveHousehold();
 
         return $this->withToast(redirect()->route('dashboard'), __('team.left'));
     }
@@ -155,12 +159,14 @@ class TeamController extends Controller
         return $this->withToast(back(), __('team.sharing_off'));
     }
 
+    /**
+     * The household this user owns: only owners manage invitations, members and sharing.
+     */
     private function ownedHousehold(Request $request): Household
     {
         $household = $request->user()->household;
 
         abort_if($household === null, 404);
-        Gate::authorize('manage', $household);
 
         return $household;
     }

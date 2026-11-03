@@ -48,8 +48,8 @@ const fr = {
                 text: "Au-delà de 30 % de ton revenu net, c'est trop. Chaque logement est classé, avec la part de chacun et ce qu'il lui reste.",
             },
             {
-                title: 'Un résultat à garder',
-                text: 'Exporte ta comparaison en PDF pour en discuter à deux, ou pour les garder sous la main pendant les visites.',
+                title: 'À partager',
+                text: 'Invite ton conjoint ou un proche à modifier le budget avec toi, ou envoie un lien public pour lui montrer la comparaison.',
             },
         ],
     },
@@ -76,7 +76,7 @@ const fr = {
         items: [
             {
                 title: 'La règle des 30 %',
-                text: "La règle la plus courante pour un budget logement est de ne pas dépasser 30 % du revenu du ménage. Au-delà, il reste souvent peu pour l'épicerie, le transport, l'épargne et les imprévus.",
+                text: "La règle la plus courante pour un budget logement est de ne pas dépasser 30 % du revenu du ménage. Elle sert de repère depuis des décennies, notamment chez les organismes de logement. Exemple : avec 4 000 $ nets par mois, le logement devrait rester sous 1 200 $, charges comprises. Au-delà, il reste souvent peu pour l'épicerie, le transport, l'épargne et les imprévus. Ce n'est pas une loi : selon tes dettes, tes enfants ou ton train de vie, tu peux viser plus bas ou, en pleine pénurie de logements, accepter de dépasser un peu. Abrio te montre simplement où chaque logement se situe.",
             },
             {
                 title: 'Comparer le coût réel, pas seulement le loyer',
@@ -114,7 +114,6 @@ const fr = {
                 'Logements illimités',
                 'Invite jusqu’à 4 personnes à modifier le budget avec toi',
                 'Lien public pour partager la comparaison',
-                'Export de la comparaison en PDF',
             ],
             cta: 'Débloquer pour 9,99 $',
         },
@@ -124,8 +123,10 @@ const fr = {
         name: 'Christophe',
         paragraphs: [
             "Développeur web depuis plus de 10 ans, installé à Québec depuis 2017. J'ai créé Abrio pour que choisir un logement à plusieurs repose sur des chiffres clairs.",
-            "J'avais un fichier Excel qui me permettait de faire ces calculs. J'ai voulu le mettre en ligne pour que ce soit plus facile.",
+            "Au début, j'avais créé un fichier Excel pour me faciliter la vie lors du calcul ponctuel des appartements. Puis je me suis dit : « Pourquoi ne pas en faire profiter le monde? » Et voilà, Abrio était né!",
+            "À Québec, les choses vont vite : tout le monde peut déménager le 1er juillet, alors les logements s'affichent et partent très rapidement. Mieux vaut pouvoir comparer en quelques minutes.",
         ],
+        linkedin: 'Me suivre sur LinkedIn',
     },
     faq: {
         title: 'Questions fréquentes',
@@ -301,20 +302,17 @@ const fr = {
             over: 'Au-dessus de la limite. Il faudrait que le logement coûte {amount} de moins par mois.',
         },
         edit: 'Modifier les logements',
-        exportPdf: 'Exporter en PDF',
         unlocked:
-            'Abrio est débloqué : logements illimités, invitations, lien public et export PDF. Merci!',
+            'Abrio est débloqué : logements illimités, invitations, lien public. Merci!',
     },
     limit: {
         badge: 'Limite atteinte',
         title: 'Tu as comparé 2 logements',
         text: "La version gratuite s'arrête à 2 logements. Débloque Abrio une seule fois pour en ajouter autant que tu veux.",
-        pdfTitle: "L'export PDF est inclus dans la version illimitée",
         price: '9,99 $',
         priceNote: 'une seule fois, pour toujours',
         perks: [
             'Logements illimités',
-            'Export de la comparaison en PDF',
             'Invite tes proches à modifier le budget avec toi',
             'Lien public pour partager la comparaison',
         ],
@@ -585,6 +583,28 @@ const fr = {
     },
     footer: {
         switchText: 'English',
+    },
+    legal: {
+        nav: 'Documents légaux',
+        titles: {
+            terms: 'Conditions',
+            privacy: 'Confidentialité',
+            'legal-notice': 'Mentions légales',
+        },
+    },
+    cookies: {
+        title: 'Témoins (cookies)',
+        text: 'Abrio utilise seulement des témoins essentiels au fonctionnement du site (connexion, sécurité, préférences). Aucun suivi publicitaire.',
+        more: 'En savoir plus',
+        ok: 'Compris',
+    },
+    consent: {
+        termsPrefix: "J'accepte les",
+        terms: "conditions d'utilisation et de vente",
+        termsAnd: 'et la',
+        privacy: 'politique de confidentialité',
+        marketing:
+            'Je veux recevoir des nouvelles et des offres d’Abrio par courriel (facultatif, retirable à tout moment).',
     },
 };
 
