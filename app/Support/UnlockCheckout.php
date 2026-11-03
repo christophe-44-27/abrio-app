@@ -29,7 +29,9 @@ class UnlockCheckout
             'mode' => 'payment',
             'line_items' => [['price' => config('billing.unlock.price_id'), 'quantity' => 1]],
             'client_reference_id' => (string) $user->id,
-            'customer_email' => $user->email,
+            // A real Stripe customer (stored in users.stripe_id): in payment mode,
+            // Checkout creates none on its own when given only an email.
+            'customer' => $user->hasStripeId() ? $user->stripeId() : $user->createAsStripeCustomer()->id,
             'metadata' => ['purchase' => self::PURCHASE],
             'invoice_creation' => ['enabled' => true],
             'locale' => in_array($locale, ['fr', 'en'], true) ? $locale : 'auto',

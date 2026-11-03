@@ -25,10 +25,14 @@ class UnlockController extends Controller
 
         abort_unless($checkout->isConfigured(), 503, 'The unlock payment is not configured.');
 
+        $origin = $this->originUrl($request);
+
+        session(['unlock.return' => $origin]);
+
         return redirect()->away($checkout->checkoutUrl(
             $user,
             route('unlock.success'),
-            $this->cancelUrl($request),
+            $origin ?? route('premium.edit'),
             app()->getLocale(),
         ));
     }
@@ -39,22 +43,28 @@ class UnlockController extends Controller
     public function success(Request $request): Response|RedirectResponse
     {
         if ($request->user()->isUnlocked()) {
-            return redirect()->route('verdicts', ['unlocked' => 1]);
+            $origin = $request->session()->pull('unlock.return');
+
+            return $this->withToast(
+                $origin ? redirect()->to($origin) : redirect()->route('verdicts'),
+                __('settings.unlocked'),
+            );
         }
 
         return Inertia::render('household/UnlockPending');
     }
 
     /**
-     * Where Stripe's back arrow leads: the page the user came from, if it is ours.
+     * The page the user clicked "unlock" from, if it is ours: where Stripe's back
+     * arrow leads, and where they land after paying.
      */
-    private function cancelUrl(Request $request): string
+    private function originUrl(Request $request): ?string
     {
         $previous = url()->previous();
 
         $isOurs = parse_url($previous, PHP_URL_HOST) === $request->getHost()
             && ! str_contains($previous, '/unlock');
 
-        return $isOurs ? $previous : route('premium.edit');
+        return $isOurs ? $previous : null;
     }
 }

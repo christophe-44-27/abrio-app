@@ -19,7 +19,6 @@ import type { Household, Housing } from '@/lib/household';
 const props = defineProps<{
     household: Household;
     housings: Housing[];
-    justUnlocked?: boolean;
     /** Public read-only view, reached through the owner's secret link. */
     shared?: boolean;
 }>();
@@ -47,13 +46,6 @@ defineOptions({ inheritAttrs: false });
         <meta v-if="shared" name="robots" content="noindex, nofollow" />
     </Head>
     <div class="mx-auto flex max-w-[1120px] flex-col gap-8">
-        <p
-            v-if="justUnlocked"
-            role="status"
-            class="rounded-xl bg-[#DFF3E8] px-5 py-4 text-[15px] font-semibold text-[#0B5D3B] print:hidden"
-        >
-            {{ t.verdicts.unlocked }}
-        </p>
         <div class="flex items-center justify-between gap-4 print:hidden">
             <BrandLink />
             <HeaderTools v-if="!shared" />

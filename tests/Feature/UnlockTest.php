@@ -189,6 +189,21 @@ class UnlockTest extends TestCase
             ->assertNotFound();
     }
 
+    public function test_the_user_lands_back_where_they_started_with_a_toast(): void
+    {
+        $user = User::factory()->create();
+        $this->fakeCheckout()->shouldReceive('checkoutUrl')->andReturn('https://checkout.stripe.com/c/pay/cs_test_abc');
+
+        $this->actingAs($user)->from('/logements')->get(route('unlock'));
+
+        $user->markUnlocked();
+
+        $this->actingAs($user->fresh())
+            ->get(route('unlock.success'))
+            ->assertRedirect(url('/logements'))
+            ->assertInertiaFlash('toast.message', __('settings.unlocked'));
+    }
+
     public function test_success_page_waits_until_the_webhook_has_run(): void
     {
         $user = User::factory()->create();
@@ -199,6 +214,7 @@ class UnlockTest extends TestCase
 
         $this->actingAs($user->fresh())
             ->get(route('unlock.success'))
-            ->assertRedirect(route('verdicts', ['unlocked' => 1]));
+            ->assertRedirect(route('verdicts'))
+            ->assertInertiaFlash('toast.message', __('settings.unlocked'));
     }
 }

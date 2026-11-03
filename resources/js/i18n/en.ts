@@ -304,8 +304,6 @@ const en: Messages = {
             over: 'Over the limit. The place would need to cost {amount} less per month.',
         },
         edit: 'Edit places',
-        unlocked:
-            'Abrio is unlocked: unlimited places, invitations, public link. Thank you!',
     },
     limit: {
         badge: 'Limit reached',
@@ -322,8 +320,8 @@ const en: Messages = {
         later: 'Not now',
         pending: {
             metaTitle: 'Payment in progress',
-            title: 'Confirming your payment…',
-            text: "Thank you! We're waiting for Stripe's confirmation. This page updates by itself.",
+            title: 'Thank you for your payment!',
+            text: "We're finishing activating your account, it only takes a few seconds. This page updates by itself; if nothing changes, click “Back to my places”.",
             slow: 'This is taking longer than expected. If your payment was accepted it has been received; reload this page in a minute or write to us if nothing changes.',
             back: 'Back to my places',
         },

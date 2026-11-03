@@ -302,8 +302,6 @@ const fr = {
             over: 'Au-dessus de la limite. Il faudrait que le logement coûte {amount} de moins par mois.',
         },
         edit: 'Modifier les logements',
-        unlocked:
-            'Abrio est débloqué : logements illimités, invitations, lien public. Merci!',
     },
     limit: {
         badge: 'Limite atteinte',
@@ -320,8 +318,8 @@ const fr = {
         later: 'Pas maintenant',
         pending: {
             metaTitle: 'Paiement en cours',
-            title: 'Confirmation du paiement…',
-            text: 'Merci! Nous attendons la confirmation de Stripe. Cette page se met à jour toute seule.',
+            title: 'Merci pour ton paiement!',
+            text: 'Nous finalisons l’activation de ton compte, ça prend quelques secondes. Cette page se met à jour toute seule; si rien ne change, clique sur « Retour à mes logements ».',
             slow: 'Ça prend plus de temps que prévu. Ton paiement est bien reçu s’il a été accepté; recharge cette page dans une minute ou écris-nous si rien ne change.',
             back: 'Retour à mes logements',
         },

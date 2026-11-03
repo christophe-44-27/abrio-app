@@ -76,8 +76,6 @@ class HousingController extends Controller
 
         return Inertia::render('household/Verdicts', [
             'household' => $household->only(['members', 'common_expenses', 'personal_expenses']),
-            'housings' => $household->housings,
-            'justUnlocked' => $request->boolean('unlocked') && $request->user()->isUnlocked(),
-        ]);
+            'housings' => $household->housings,        ]);
     }
 }
